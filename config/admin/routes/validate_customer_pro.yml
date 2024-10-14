@@ -1,0 +1,7 @@
+admin_drsoft_fr_validate_customer_pro_index:
+    path: /
+    methods: [ GET ]
+    defaults:
+        _controller: DrSoftFr\Module\ValidateCustomerPro\Controller\Admin\ValidateCustomerProController::indexAction
+        _legacy_controller: AdminDrSoftFrValidateCustomerPro
+        _legacy_link: AdminDrSoftFrValidateCustomerPro

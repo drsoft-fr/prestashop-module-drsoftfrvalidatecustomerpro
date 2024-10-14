@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use DrSoftFr\Module\ValidateCustomerPro\Config;
+use DrSoftFr\Module\ValidateCustomerPro\Controller\Admin\ValidateCustomerProController;
 use PrestaShop\PrestaShop\Core\Cache\Clearer\CacheClearerChain;
 
 if (!defined('_PS_VERSION_') || !defined('_CAN_LOAD_FILES_')) {
@@ -54,7 +55,15 @@ class drsoftfrvalidatecustomerpro extends Module
             'max' => _PS_VERSION_
         ];
         $this->tab = 'administration';
-        $this->tabs = [];
+        $this->tabs = [
+            [
+                'class_name' => ValidateCustomerProController::TAB_CLASS_NAME,
+                'name' => 'Validate Customer Pro',
+                'parent_class_name' => 'AdminParentCustomerPreferences',
+                'route_name' => 'admin_drsoft_fr_validate_customer_pro_index',
+                'visible' => false,
+            ],
+        ];
         $this->version = '0.0.1';
         $this->authorEmail = 'contact@drsoft.fr';
         $this->moduleGithubRepositoryUrl = 'https://github.com/drsoft-fr/prestashop-module-drsoftfrvalidatecustomerpro';
@@ -153,6 +162,9 @@ class drsoftfrvalidatecustomerpro extends Module
      */
     public function getContent(): void
     {
+        Tools::redirectAdmin(
+            $this->context->link->getAdminLink(ValidateCustomerProController::TAB_CLASS_NAME)
+        );
     }
 
     /**

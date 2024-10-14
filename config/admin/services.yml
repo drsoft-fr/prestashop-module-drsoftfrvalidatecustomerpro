@@ -1,0 +1,4 @@
+services:
+    drsoft_fr.module.validate_customer_pro.module:
+        class: drsoftfrvalidatecustomerpro
+        public: true
