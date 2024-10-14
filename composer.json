@@ -1,0 +1,41 @@
+{
+  "name": "drsoft-fr/prestashop-module-drsoftfrvalidatecustomerpro",
+  "license": "MIT",
+  "type": "prestashop-module",
+  "authors": [
+    {
+      "name": "drSoft.fr",
+      "email": "contact@drsoft.fr",
+      "homepage": "https://github.com/drsoft-fr"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "DrSoftFr\\Module\\ValidateCustomerPro\\": "src/"
+    },
+    "classmap": [
+      "drsoftfrvalidatecustomerpro.php"
+    ],
+    "exclude-from-classmap": []
+  },
+  "config": {
+    "platform": {
+      "php": "7.2.34"
+    },
+    "preferred-install": "dist",
+    "classmap-authoritative": true,
+    "optimize-autoloader": true,
+    "sort-packages": true,
+    "prepend-autoloader": false
+  },
+  "homepage": "https://github.com/drsoft-fr/prestashop-module-drsoftfrvalidatecustomerpro",
+  "require": {
+    "php": ">=7.2",
+    "drsoft-fr/prestashop-module-helper": "^1.0"
+  },
+  "scripts": {},
+  "scripts-descriptions": {},
+  "support": {
+    "issues": "https://github.com/drsoft-fr/prestashop-module-drsoftfrvalidatecustomerpro/issues"
+  }
+}
