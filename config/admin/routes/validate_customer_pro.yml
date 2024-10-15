@@ -5,3 +5,10 @@ admin_drsoft_fr_validate_customer_pro_index:
         _controller: DrSoftFr\Module\ValidateCustomerPro\Controller\Admin\ValidateCustomerProController::indexAction
         _legacy_controller: AdminDrSoftFrValidateCustomerPro
         _legacy_link: AdminDrSoftFrValidateCustomerPro
+
+admin_drsoft_fr_validate_customer_pro_reset:
+    path: /reset
+    methods: [ GET ]
+    defaults:
+        _controller: DrSoftFr\Module\ValidateCustomerPro\Controller\Admin\ValidateCustomerProController::resetAction
+        _legacy_controller: AdminDrSoftFrValidateCustomerPro
