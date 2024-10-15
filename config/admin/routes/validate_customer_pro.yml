@@ -12,3 +12,10 @@ admin_drsoft_fr_validate_customer_pro_reset:
     defaults:
         _controller: DrSoftFr\Module\ValidateCustomerPro\Controller\Admin\ValidateCustomerProController::resetAction
         _legacy_controller: AdminDrSoftFrValidateCustomerPro
+
+admin_drsoft_fr_validate_customer_pro_save:
+    path: /
+    methods: [ POST ]
+    defaults:
+        _controller: DrSoftFr\Module\ValidateCustomerPro\Controller\Admin\ValidateCustomerProController::saveAction
+        _legacy_controller: AdminDrSoftFrValidateCustomerPro

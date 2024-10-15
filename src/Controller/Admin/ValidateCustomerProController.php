@@ -94,6 +94,74 @@ final class ValidateCustomerProController extends FrameworkBundleAdminController
     }
 
     /**
+     * Edit setting
+     *
+     * @AdminSecurity(
+     *     "is_granted('update', request.get('_legacy_controller'))",
+     *     redirectRoute="admin_drsoft_fr_validate_customer_pro_index",
+     *     message="You do not have permission to edit this."
+     * )
+     *
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function saveAction(Request $request): Response
+    {
+        try {
+            $handler = $this->getValidateCustomerProFormHandler();
+
+            $form = $handler->getForm();
+            $form->handleRequest($request);
+
+            if (!$form->isSubmitted()) {
+                return $this->redirectToRoute('admin_drsoft_fr_validate_customer_pro_index');
+            }
+
+            if (!$form->isValid()) {
+                $this->addFlash(
+                    'error',
+                    $this->trans(
+                        'The form is invalid.',
+                        'Modules.Drsoftfrvalidatecustomerpro.Error'
+                    )
+                );
+
+                return $this->redirectToRoute('admin_drsoft_fr_validate_customer_pro_index');
+            }
+
+            $errors = $handler->save($form->getData());
+
+            if (!empty($errors)) {
+                $this->flashErrors($errors);
+            } else {
+                $this->addFlash(
+                    'success',
+                    $this->trans(
+                        'Your setting are saved.',
+                        'Modules.Drsoftfrvalidatecustomerpro.Success'
+                    )
+                );
+            }
+
+        } catch (Throwable $t) {
+            $this->addFlash(
+                'error',
+                $this->trans(
+                    'Cannot save the setting. Throwable: #%code% - %message%',
+                    'Modules.Drsoftfrvalidatecustomerpro.Error',
+                    [
+                        '%code%' => $t->getCode(),
+                        '%message%' => $t->getMessage(),
+                    ]
+                )
+            );
+        }
+
+        return $this->redirectToRoute('admin_drsoft_fr_validate_customer_pro_index');
+    }
+
+    /**
      * @return drsoftfrvalidatecustomerpro|object
      */
     protected function getModule()
