@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 use DrSoftFr\Module\ValidateCustomerPro\Config;
 use DrSoftFr\Module\ValidateCustomerPro\Controller\Admin\ValidateCustomerProController;
+use DrSoftFr\Module\ValidateCustomerPro\Install\Factory\InstallerFactory;
+use DrSoftFr\Module\ValidateCustomerPro\Install\Installer;
 use PrestaShop\PrestaShop\Core\Cache\Clearer\CacheClearerChain;
 
 if (!defined('_PS_VERSION_') || !defined('_CAN_LOAD_FILES_')) {
@@ -205,6 +207,16 @@ class drsoftfrvalidatecustomerpro extends Module
         }
 
         try {
+            $installer = InstallerFactory::create();
+
+            $installer->install($this);
+        } catch (Throwable $t) {
+            $this->handleException($t);
+
+            return false;
+        }
+
+        try {
             $this->getCacheClearerChain()->clear();
         } catch (Throwable $t) {
             $this->handleException($t);
@@ -228,6 +240,17 @@ class drsoftfrvalidatecustomerpro extends Module
      */
     public function uninstall(): bool
     {
+        try {
+            /** @var Installer $installer */
+            $installer = $this->get(Config::INSTALLER_SERVICE);
+
+            $installer->uninstall($this);
+        } catch (Throwable $t) {
+            $this->handleException($t);
+
+            return false;
+        }
+
         if (!parent::uninstall()) {
             $this->handleException(
                 new Exception(
