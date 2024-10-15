@@ -1,0 +1,2 @@
+imports:
+    - { resource: services/common/validate_customer_pro.yml }

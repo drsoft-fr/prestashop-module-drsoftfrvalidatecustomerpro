@@ -1,0 +1,28 @@
+{% import '@PrestaShop/Admin/macros.html.twig' as ps %}
+
+{% block validate_customer_pro_form %}
+    {{ form_start(form) }}
+    <div class="card">
+        <h3 class="card-header">
+            <i class="material-icons">settings</i> {{ 'drSoft.fr Validate customer pro'|trans }}
+        </h3>
+        <div class="card-body card-block">
+            <div class="card-text form-wrapper">
+                {{ form_errors(form) }}
+                {% block validate_customer_pro_form_rest %}
+                    {{ form_rest(form) }}
+                {% endblock %}
+            </div>
+        </div>
+        <div class="card-footer">
+{#            <a href="{{ path('admin_drsoft_fr_validate_customer_pro_reset') }}"#}
+{#               class="btn btn-outline-secondary">#}
+{#                {{ 'Reset default settings'|trans }}#}
+{#            </a>#}
+            <button class="btn btn-primary float-right">
+                {{ 'Save'|trans({}, 'Admin.Actions') }}
+            </button>
+        </div>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}

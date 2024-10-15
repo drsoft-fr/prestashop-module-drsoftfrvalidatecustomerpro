@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace DrSoftFr\Module\ValidateCustomerPro\Install;
 
+use DrSoftFr\Module\ValidateCustomerPro\Data\Configuration\ValidateCustomerProConfiguration;
 use Exception;
 use Module;
+use Throwable;
 
 /**
  * Class responsible for modifications needed during installation/uninstallation of the module.
@@ -14,8 +16,15 @@ final class Installer
 {
     const HOOKS = [];
 
-    public function __construct()
+    /**
+     * @var ValidateCustomerProConfiguration
+     */
+    private $validateCustomerProConfiguration;
+
+    public function __construct(
+        ValidateCustomerProConfiguration $validateCustomerProConfiguration)
     {
+        $this->validateCustomerProConfiguration = $validateCustomerProConfiguration;
     }
 
     /**
@@ -33,6 +42,8 @@ final class Installer
             throw new Exception('An error occurred when registering hooks for the module.');
         }
 
+        $this->validateCustomerProConfiguration->initConfiguration();
+
         return true;
     }
 
@@ -45,6 +56,12 @@ final class Installer
      */
     public function uninstall(): bool
     {
+        try {
+            $this->validateCustomerProConfiguration->removeConfiguration();
+        } catch (Throwable $t) {
+            throw new Exception('An error occurred when deleting the module parameters.');
+        }
+
         return true;
     }
 
@@ -58,5 +75,13 @@ final class Installer
     private function registerHooks(Module $module): bool
     {
         return (bool)$module->registerHook(self::HOOKS);
+    }
+
+    /**
+     * @return ValidateCustomerProConfiguration
+     */
+    public function getValidateCustomerProConfiguration(): ValidateCustomerProConfiguration
+    {
+        return $this->validateCustomerProConfiguration;
     }
 }

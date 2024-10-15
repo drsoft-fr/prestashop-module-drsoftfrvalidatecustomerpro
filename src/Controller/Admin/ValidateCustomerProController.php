@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace DrSoftFr\Module\ValidateCustomerPro\Controller\Admin;
 
 use drsoftfrvalidatecustomerpro;
+use PrestaShop\PrestaShop\Core\Form\FormHandlerInterface;
 use PrestaShopBundle\Controller\Admin\FrameworkBundleAdminController;
 use PrestaShopBundle\Security\Annotation\AdminSecurity;
 use PrestaShopBundle\Security\Annotation\ModuleActivated;
@@ -35,8 +36,13 @@ final class ValidateCustomerProController extends FrameworkBundleAdminController
      */
     public function indexAction(Request $request): Response
     {
+        $form = $this
+            ->getValidateCustomerProFormHandler()
+            ->getForm();
+
         return $this->render('@Modules/drsoftfrvalidatecustomerpro/views/templates/admin/index.html.twig', [
             'enableSidebar' => true,
+            'form' => $form->createView(),
             'help_link' => $this->generateSidebarLink($request->attributes->get('_legacy_controller')),
             'module' => $this->getModule(),
         ]);
@@ -48,5 +54,15 @@ final class ValidateCustomerProController extends FrameworkBundleAdminController
     protected function getModule()
     {
         return $this->get('drsoft_fr.module.validate_customer_pro.module');
+    }
+
+    /**
+     * Get ValidateCustomerPro form handler.
+     *
+     * @return FormHandlerInterface
+     */
+    protected function getValidateCustomerProFormHandler(): FormHandlerInterface
+    {
+        return $this->get('drsoft_fr.module.validate_customer_pro.form.handler.validate_customer_pro_form_handler');
     }
 }

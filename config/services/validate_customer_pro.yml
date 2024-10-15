@@ -1,0 +1,23 @@
+services:
+    # Form services
+    drsoft_fr.module.validate_customer_pro.form.data_provider.validate_customer_pro_form_data_provider:
+        class: DrSoftFr\Module\ValidateCustomerPro\Form\DataProvider\ValidateCustomerProFormDataProvider
+        arguments:
+            - '@drsoft_fr.module.validate_customer_pro.data.configuration.validate_customer_pro_configuration'
+
+    drsoft_fr.module.validate_customer_pro.form.handler.validate_customer_pro_form_handler:
+        class: PrestaShop\PrestaShop\Core\Form\Handler
+        arguments:
+            - '@form.factory'
+            - '@prestashop.core.hook.dispatcher'
+            - '@drsoft_fr.module.validate_customer_pro.form.data_provider.validate_customer_pro_form_data_provider'
+            - DrSoftFr\Module\ValidateCustomerPro\Form\ValidateCustomerProType
+            - 'DrSoftFrModuleValidateCustomerProSetting'
+        public: true
+
+    # setting form
+    drsoft_fr.module.validate_customer_pro.form.validate_customer_pro_type:
+        class: DrSoftFr\Module\ValidateCustomerPro\Form\ValidateCustomerProType
+        parent: 'form.type.translatable.aware'
+        tags:
+            - { name: form.type }

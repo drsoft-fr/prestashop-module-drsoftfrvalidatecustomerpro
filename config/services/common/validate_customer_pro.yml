@@ -1,0 +1,18 @@
+services:
+    # Data factory
+    drsoft_fr.module.validate_customer_pro.data.factory.validate_customer_pro_data_factory:
+        class: DrSoftFr\Module\ValidateCustomerPro\Data\Factory\ValidateCustomerProDataFactory
+        arguments:
+            - '@drsoft_fr.module.validate_customer_pro.data.configuration.validate_customer_pro_configuration'
+
+    # Data provider
+    drsoft_fr.module.validate_customer_pro.data.configuration.validate_customer_pro_configuration:
+        class: DrSoftFr\Module\ValidateCustomerPro\Data\Configuration\ValidateCustomerProConfiguration
+        arguments:
+            - '@prestashop.adapter.legacy.configuration'
+        public: true
+
+    drsoft_fr.module.validate_customer_pro.data.validate_customer_pro_data_provider:
+        class: DrSoftFr\Module\ValidateCustomerPro\Data\Factory\ValidateCustomerProDataFactory
+        factory: 'drsoft_fr.module.validate_customer_pro.data.factory.validate_customer_pro_data_factory:getData'
+        public: true
