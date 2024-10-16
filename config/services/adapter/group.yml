@@ -3,7 +3,7 @@ services:
     drsoft_fr.module.validate_customer_pro.query.group.get_id_groups_query:
         class: DrSoftFr\Module\ValidateCustomerPro\Query\Group\GetIdGroupsQuery
         arguments:
-            - null
+            - '@=service("prestashop.adapter.legacy.context").getContext().shop.id'
 
     # Query handler services
     drsoft_fr.module.validate_customer_pro.adapter.query_handler.group.get_id_groups_query_handler:
