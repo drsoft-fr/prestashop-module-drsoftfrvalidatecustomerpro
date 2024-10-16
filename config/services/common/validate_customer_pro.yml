@@ -1,4 +1,11 @@
 services:
+    # Data validator
+    drsoft_fr.module.validate_customer_pro.data.validator.validate_customer_pro_validator:
+        class: DrSoftFr\Module\ValidateCustomerPro\Data\Validator\ValidateCustomerProValidator
+        arguments:
+            - '@drsoft_fr.module.validate_customer_pro.adapter.query_handler.cms_page.get_id_cms_pages_provider'
+            - '@drsoft_fr.module.validate_customer_pro.adapter.query_handler.group.get_id_groups_provider'
+
     # Data factory
     drsoft_fr.module.validate_customer_pro.data.factory.validate_customer_pro_data_factory:
         class: DrSoftFr\Module\ValidateCustomerPro\Data\Factory\ValidateCustomerProDataFactory
@@ -10,6 +17,7 @@ services:
         class: DrSoftFr\Module\ValidateCustomerPro\Data\Configuration\ValidateCustomerProConfiguration
         arguments:
             - '@prestashop.adapter.legacy.configuration'
+            - '@drsoft_fr.module.validate_customer_pro.data.validator.validate_customer_pro_validator'
         public: true
 
     drsoft_fr.module.validate_customer_pro.data.validate_customer_pro_data_provider:

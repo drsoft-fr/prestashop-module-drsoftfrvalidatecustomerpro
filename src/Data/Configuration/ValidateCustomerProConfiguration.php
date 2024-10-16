@@ -20,10 +20,36 @@ final class ValidateCustomerProConfiguration implements DataConfigurationInterfa
 {
     const CONFIGURATION_KEYS = [
         'active' => 'DRSOFT_FR_VALIDATE_CUSTOMER_PRO_ACTIVE',
+        'admin_action_customer_account_add_email' => 'DRSOFT_FR_VALIDATE_CUSTOMER_PRO_ADMIN_ACTION_CUSTOMER_ACCOUNT_ADD_EMAIL',
+        'admin_send_email_on_action_customer_account_add_hook' => 'DRSOFT_FR_VALIDATE_CUSTOMER_PRO_ADMIN_EMAIL_ON_ACTION_CUSTOMER_ACCOUNT_ADD',
+        'cms_notify_id' => 'DRSOFT_FR_VALIDATE_CUSTOMER_PRO_CMS_NOTIFY_ID',
+        'cms_not_activated_id' => 'DRSOFT_FR_VALIDATE_CUSTOMER_PRO_CMS_NOT_ACTIVATED_ID',
+        'customer_group_id' => 'DRSOFT_FR_VALIDATE_CUSTOMER_PRO_CUSTOMER_GROUP_ID',
+        'enable_auto_customer_group_selection' => 'DRSOFT_FR_VALIDATE_CUSTOMER_PRO_ENABLE_AUTO_CUSTOMER_GROUP_SELECTION',
+        'enable_email_approval' => 'DRSOFT_FR_VALIDATE_CUSTOMER_PRO_ENABLE_EMAIL_APPROVAL',
+        'enable_email_pending_approval' => 'DRSOFT_FR_VALIDATE_CUSTOMER_PRO_ENABLE_EMAIL_PENDING_APPROVAL',
+        'enable_manual_validation_account' => 'DRSOFT_FR_VALIDATE_CUSTOMER_PRO_ENABLE_MANUAL_VALIDATION_ACCOUNT',
+        'require_company_field' => 'DRSOFT_FR_VALIDATE_CUSTOMER_PRO_REQUIRE_COMPANY_FIELD',
+        'require_siret_field' => 'DRSOFT_FR_VALIDATE_CUSTOMER_PRO_REQUIRE_SIRET_FIELD',
+        'enable_unauthenticated_customer_alert' => 'DRSOFT_FR_VALIDATE_CUSTOMER_PRO_ENABLE_UNAUTHENTICATED_CUSTOMER_ALERT',
+        'enable_unapproved_customer_alert' => 'DRSOFT_FR_VALIDATE_CUSTOMER_PRO_ENABLE_UNAPPROVED_CUSTOMER_ALERT',
     ];
 
     const CONFIGURATION_DEFAULT_VALUES = [
         'active' => false,
+        'admin_action_customer_account_add_email' => '',
+        'admin_send_email_on_action_customer_account_add_hook' => false,
+        'cms_notify_id' => 0,
+        'cms_not_activated_id' => 0,
+        'customer_group_id' => 0,
+        'enable_auto_customer_group_selection' => false,
+        'enable_email_approval' => false,
+        'enable_email_pending_approval' => false,
+        'enable_manual_validation_account' => false,
+        'require_company_field' => false,
+        'require_siret_field' => false,
+        'enable_unauthenticated_customer_alert' => false,
+        'enable_unapproved_customer_alert' => false,
     ];
 
     /**
@@ -32,11 +58,21 @@ final class ValidateCustomerProConfiguration implements DataConfigurationInterfa
     private $configuration;
 
     /**
-     * @param Configuration $configuration
+     * @var ValidateCustomerProValidator|null
      */
-    public function __construct(Configuration $configuration)
+    private ?ValidateCustomerProValidator $validator;
+
+    /**
+     * @param Configuration $configuration
+     * @param ValidateCustomerProValidator|null $validator
+     */
+    public function __construct(
+        Configuration                $configuration,
+        ValidateCustomerProValidator $validator = null
+    )
     {
         $this->configuration = $configuration;
+        $this->validator = $validator;
     }
 
     /**
@@ -51,10 +87,33 @@ final class ValidateCustomerProConfiguration implements DataConfigurationInterfa
                 $key,
                 [
                     'active',
+                    'admin_send_email_on_action_customer_account_add_hook',
+                    'enable_auto_customer_group_selection',
+                    'enable_email_approval',
+                    'enable_email_pending_approval',
+                    'enable_manual_validation_account',
+                    'require_company_field',
+                    'require_siret_field',
+                    'enable_unauthenticated_customer_alert',
+                    'enable_unapproved_customer_alert',
                 ],
                 true
             )) {
                 $configuration[$key] = $this->configuration->getBoolean($value, self::CONFIGURATION_DEFAULT_VALUES[$key]);
+
+                continue;
+            }
+
+            if (in_array(
+                $key,
+                [
+                    'cms_notify_id',
+                    'cms_not_activated_id',
+                    'customer_group_id',
+                ],
+                true
+            )) {
+                $configuration[$key] = $this->configuration->getInt($value, self::CONFIGURATION_DEFAULT_VALUES[$key]);
 
                 continue;
             }
@@ -124,10 +183,10 @@ final class ValidateCustomerProConfiguration implements DataConfigurationInterfa
      */
     public function validateConfiguration(array $configuration): bool
     {
-        $validator = new ValidateCustomerProValidator();
+        if (null === $this->validator) {
+            return true;
+        }
 
-        $validator->validate($configuration);
-
-        return true;
+        return $this->validator->validate($configuration);
     }
 }
