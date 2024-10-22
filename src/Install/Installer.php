@@ -14,7 +14,9 @@ use Throwable;
  */
 final class Installer
 {
-    const HOOKS = [];
+    const HOOKS = [
+        'actionListMailThemes'
+    ];
 
     /**
      * @var ValidateCustomerProConfiguration
