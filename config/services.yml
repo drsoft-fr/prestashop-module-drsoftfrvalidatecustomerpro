@@ -1,4 +1,3 @@
 imports:
     - { resource: ./common.yml }
-    - { resource: services/adapter.yml }
     - { resource: services/validate_customer_pro.yml }
