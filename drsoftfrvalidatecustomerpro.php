@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use DrSoftFr\Module\ValidateCustomerPro\Config;
 use DrSoftFr\Module\ValidateCustomerPro\Controller\Admin\ValidateCustomerProController;
+use DrSoftFr\Module\ValidateCustomerPro\Controller\Hook\ActionListMailThemesController;
 use DrSoftFr\Module\ValidateCustomerPro\Install\Factory\InstallerFactory;
 use DrSoftFr\Module\ValidateCustomerPro\Install\Installer;
 use PrestaShop\PrestaShop\Core\Cache\Clearer\CacheClearerChain;
@@ -183,6 +184,21 @@ class drsoftfrvalidatecustomerpro extends Module
         PrestaShopLogger::addLog($errorMessage, 3);
 
         $this->_errors[] = $errorMessage;
+    }
+
+    /**
+     * This hook allows you to add mail layout.
+     *
+     * @param array $p
+     *
+     * @return void
+     */
+    public function hookActionListMailThemes(array $p = []): void
+    {
+        $file = _PS_MODULE_DIR_ . $this->name . '/' . $this->name . '.php';
+        $controller = new ActionListMailThemesController($this, $file, $this->_path, $p);
+
+        $controller->run();
     }
 
     /**
