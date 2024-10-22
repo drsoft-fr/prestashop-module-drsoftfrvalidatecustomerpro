@@ -90,10 +90,10 @@ final class ValidateCustomerProType extends TranslatorAwareType
             ])
             ->add('cms_notify_id', ChoiceType::class, [
                 'empty_data' => 0,
-                'choices' => $this->cmsPageChoices,
+                'choices' => array_merge(['' => 0], $this->cmsPageChoices),
                 'choice_translation_domain' => false,
                 'help' => $this->trans(
-                    'CMS page ID where validate account waiting.',
+                    'CMS page ID where validate account waiting. Selecting nothing will disable redirection.',
                     'Modules.Drsoftfrvalidatecustomerpro.Admin'
                 ),
                 'label' => $this->trans(
@@ -101,22 +101,22 @@ final class ValidateCustomerProType extends TranslatorAwareType
                     'Modules.Drsoftfrvalidatecustomerpro.Admin'
                 ),
                 'multiple' => false,
-                'required' => false,
+                'required' => true,
             ])
             ->add('cms_not_activated_id', ChoiceType::class, [
                 'empty_data' => 0,
-                'choices' => $this->cmsPageChoices,
+                'choices' => array_merge(['' => 0], $this->cmsPageChoices),
                 'choice_translation_domain' => false,
                 'help' => $this->trans(
                     'CMS page ID where the user is redirect if he try to login and his account are not longer enable.',
                     'Modules.Drsoftfrvalidatecustomerpro.Admin'
                 ),
                 'label' => $this->trans(
-                    'CMS page ID account not enable',
+                    'CMS page ID account not enable. Selecting nothing will disable redirection.',
                     'Modules.Drsoftfrvalidatecustomerpro.Admin'
                 ),
                 'multiple' => false,
-                'required' => false,
+                'required' => true,
             ])
             ->add('customer_group_id', ChoiceType::class, [
                 'empty_data' => 0,
@@ -131,12 +131,12 @@ final class ValidateCustomerProType extends TranslatorAwareType
                     'Modules.Drsoftfrvalidatecustomerpro.Admin'
                 ),
                 'multiple' => false,
-                'required' => false,
+                'required' => true,
             ])
             ->add('enable_auto_customer_group_selection', SwitchType::class, [
                 'empty_data' => false,
                 'help' => $this->trans(
-                    'Enable to assign selected group from below select box.',
+                    'Enable to assign selected group from above select box.',
                     'Modules.Drsoftfrvalidatecustomerpro.Admin'
                 ),
                 'label' => $this->trans(

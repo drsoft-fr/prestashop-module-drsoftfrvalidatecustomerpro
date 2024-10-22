@@ -50,8 +50,8 @@ final class ValidateCustomerProValidator extends AbstractValidator implements Va
             ->validateAdminActionCustomerAccountAddEmail($data)
             ->validateCmsNotifyId($data)
             ->validateCmsNotActivatedId($data)
-            ->validateCustomerGroupId($data)
             ->validateEnableAutoCustomerGroupSelection($data)
+            ->validateCustomerGroupId($data)
             ->validateEnableEmailApproval($data)
             ->validateEnableEmailPendingApproval($data)
             ->validateEnableManualValidationAccount($data)
@@ -140,7 +140,7 @@ final class ValidateCustomerProValidator extends AbstractValidator implements Va
      */
     private function validateCmsNotifyId(array $configuration): ValidateCustomerProValidator
     {
-        if (!isset($configuration['cms_notify_id'])) {
+        if (empty($configuration['cms_notify_id'])) {
             return $this;
         }
 
@@ -176,7 +176,7 @@ final class ValidateCustomerProValidator extends AbstractValidator implements Va
      */
     private function validateCmsNotActivatedId(array $configuration): ValidateCustomerProValidator
     {
-        if (!isset($configuration['cms_not_activated_id'])) {
+        if (empty($configuration['cms_not_activated_id'])) {
             return $this;
         }
 
@@ -212,6 +212,10 @@ final class ValidateCustomerProValidator extends AbstractValidator implements Va
      */
     private function validateCustomerGroupId(array $configuration): ValidateCustomerProValidator
     {
+        if (!$configuration['enable_auto_customer_group_selection']) {
+            return $this;
+        }
+
         if (!isset($configuration['customer_group_id'])) {
             return $this;
         }
@@ -228,7 +232,7 @@ final class ValidateCustomerProValidator extends AbstractValidator implements Va
         ) {
             throw new NonexistentGroupIdException(
                 sprintf(
-                    'Group width "%d" does not exist.',
+                    'Group with "%d" does not exist.',
                     $configuration['customer_group_id']
                 )
             );
