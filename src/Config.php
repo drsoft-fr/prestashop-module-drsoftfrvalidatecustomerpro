@@ -17,6 +17,8 @@ final class Config
 
     const INSTALLER_SERVICE = 'drsoft_fr.module.validate_customer_pro.install.installer';
 
+    const SETTING_PROVIDER_SERVICE = 'drsoft_fr.module.validate_customer_pro.data.validate_customer_pro_data_provider';
+
     /**
      * Creates an error message using the given method, line number and throwable object.
      *
