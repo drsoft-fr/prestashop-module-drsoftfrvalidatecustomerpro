@@ -1,0 +1,8 @@
+services:
+    # repository
+    drsoft_fr.module.validate_customer_pro.repository.adapter_customer_repository:
+        class: DrSoftFr\Module\ValidateCustomerPro\Repository\AdapterCustomerRepository
+        factory: [ '@doctrine.orm.default_entity_manager', getRepository ]
+        arguments:
+            - DrSoftFr\Module\ValidateCustomerPro\Entity\AdapterCustomer
+        public: true
