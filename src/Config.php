@@ -13,6 +13,8 @@ use Throwable;
  */
 final class Config
 {
+    const ADAPTER_CUSTOMER_TABLE_NAME = _DB_PREFIX_ . 'drsoft_fr_validate_customer_pro_adapter_customer';
+
     const ERROR_MESSAGE_PATTERN = 'drsoftfrvalidatecustomerpro - %s - %d - Throwable #%d - %s.';
 
     const INSTALLER_SERVICE = 'drsoft_fr.module.validate_customer_pro.install.installer';
