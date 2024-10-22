@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use DrSoftFr\Module\ValidateCustomerPro\Config;
 use DrSoftFr\Module\ValidateCustomerPro\Controller\Admin\ValidateCustomerProController;
+use DrSoftFr\Module\ValidateCustomerPro\Controller\Hook\ActionCustomerAccountAddController;
 use DrSoftFr\Module\ValidateCustomerPro\Controller\Hook\ActionListMailThemesController;
 use DrSoftFr\Module\ValidateCustomerPro\Install\Factory\InstallerFactory;
 use DrSoftFr\Module\ValidateCustomerPro\Install\Installer;
@@ -184,6 +185,19 @@ class drsoftfrvalidatecustomerpro extends Module
         PrestaShopLogger::addLog($errorMessage, 3);
 
         $this->_errors[] = $errorMessage;
+    }
+
+    /**
+     * @param array $p
+     *
+     * @return void
+     */
+    public function hookActionCustomerAccountAdd(array $p = []): void
+    {
+        $file = _PS_MODULE_DIR_ . $this->name . '/' . $this->name . '.php';
+        $controller = new ActionCustomerAccountAddController($this, $file, $this->_path, $p);
+
+        $controller->run();
     }
 
     /**
