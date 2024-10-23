@@ -37,13 +37,13 @@ final class ActionObjectUpdateAfterController extends AbstractHookController imp
     private $settings;
 
     /**
-     * Checks if the data is valid.
+     * Checks if the object is valid.
      *
-     * @return bool True if the data is valid, false otherwise.
+     * @return bool True if the object is valid, false otherwise.
      *
      * @throws Exception
      */
-    private function checkData(): bool
+    private function checkObject(): bool
     {
         if (empty($this->props['object'])) {
             return false;
@@ -191,13 +191,13 @@ final class ActionObjectUpdateAfterController extends AbstractHookController imp
     public function run(): bool
     {
         try {
-            $this->settings = $this->module->get(Config::SETTING_PROVIDER_SERVICE);
-
-            if (false === $this->settings['active']) {
+            if (false === $this->checkObject()) {
                 return true;
             }
 
-            if (false === $this->checkData()) {
+            $this->settings = $this->module->get(Config::SETTING_PROVIDER_SERVICE);
+
+            if (false === $this->settings['active']) {
                 return true;
             }
 
