@@ -20,6 +20,7 @@ final class Installer
     const HOOKS = [
         'actionAuthentication',
         'actionCustomerAccountAdd',
+        'actionFrontControllerSetVariables',
         'actionListMailThemes',
     ];
 

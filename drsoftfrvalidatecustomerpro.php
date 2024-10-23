@@ -6,6 +6,7 @@ use DrSoftFr\Module\ValidateCustomerPro\Config;
 use DrSoftFr\Module\ValidateCustomerPro\Controller\Admin\ValidateCustomerProController;
 use DrSoftFr\Module\ValidateCustomerPro\Controller\Hook\ActionAuthenticationController;
 use DrSoftFr\Module\ValidateCustomerPro\Controller\Hook\ActionCustomerAccountAddController;
+use DrSoftFr\Module\ValidateCustomerPro\Controller\Hook\ActionFrontControllerSetVariablesController;
 use DrSoftFr\Module\ValidateCustomerPro\Controller\Hook\ActionListMailThemesController;
 use DrSoftFr\Module\ValidateCustomerPro\Install\Factory\InstallerFactory;
 use DrSoftFr\Module\ValidateCustomerPro\Install\Installer;
@@ -212,6 +213,19 @@ class drsoftfrvalidatecustomerpro extends Module
         $controller = new ActionCustomerAccountAddController($this, $file, $this->_path, $p);
 
         $controller->run();
+    }
+
+    /**
+     * @param array $p
+     *
+     * @return array
+     */
+    public function hookActionFrontControllerSetVariables(array $p = []): array
+    {
+        $file = _PS_MODULE_DIR_ . $this->name . '/' . $this->name . '.php';
+        $controller = new ActionFrontControllerSetVariablesController($this, $file, $this->_path, $p);
+
+        return $controller->run();
     }
 
     /**
