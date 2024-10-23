@@ -115,8 +115,8 @@ final class ActionObjectUpdateAfterController extends AbstractHookController imp
         $repository = $this->module->get('drsoft_fr.module.validate_customer_pro.repository.adapter_customer_repository');
 
         /** @var AdapterCustomer $obj */
-        $obj = $repository->findBy([
-            'id_customer' => $this->customer->id
+        $obj = $repository->findOneBy([
+            'idCustomer' => $this->customer->id
         ]);
 
         if (null === $obj) {
