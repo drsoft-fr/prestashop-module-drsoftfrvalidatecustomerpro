@@ -138,13 +138,13 @@ final class ActionAuthenticationController extends AbstractHookController implem
 
         /** @var AdapterCustomer $obj */
         $obj = $repository->findOneBy([
-            'idCustomer' => $this->customer->id
+            'idCustomer' => (int)$this->customer->id
         ]);
 
         if (null === $obj) {
             throw new AdapterCustomerNotFoundException(sprintf(
                     'Manufacturer with id_customer "%d" was not found',
-                    $this->customer->id
+                (int)$this->customer->id
                 )
             );
         }

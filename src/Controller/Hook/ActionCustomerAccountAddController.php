@@ -299,7 +299,7 @@ final class ActionCustomerAccountAddController extends AbstractHookController im
 
         $mailVars = [
             '{new_customer_data}' => $this->getCustomerData(),
-            '{new_customer_id}' => $this->customer->id,
+            '{new_customer_id}' => (int)$this->customer->id,
             '{new_customer_last_name}' => $this->customer->lastname,
             '{new_customer_first_name}' => $this->customer->firstname,
             '{new_customer_email}' => $this->customer->email,
@@ -361,13 +361,13 @@ final class ActionCustomerAccountAddController extends AbstractHookController im
 
         /** @var AdapterCustomer $obj */
         $obj = $repository->findOneBy([
-            'idCustomer' => $this->customer->id
+            'idCustomer' => (int)$this->customer->id
         ]);
 
         if (null === $obj) {
             $obj = new AdapterCustomer();
 
-            $obj->setIdCustomer($this->customer->id);
+            $obj->setIdCustomer((int)$this->customer->id);
             $em->persist($obj);
         }
 

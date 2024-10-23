@@ -116,7 +116,7 @@ final class ActionObjectUpdateAfterController extends AbstractHookController imp
 
         /** @var AdapterCustomer $obj */
         $obj = $repository->findOneBy([
-            'idCustomer' => $this->customer->id
+            'idCustomer' => (int)$this->customer->id
         ]);
 
         if (null === $obj) {
@@ -126,7 +126,7 @@ final class ActionObjectUpdateAfterController extends AbstractHookController imp
 
             $obj = new AdapterCustomer();
 
-            $obj->setIdCustomer($this->customer->id);
+            $obj->setIdCustomer((int)$this->customer->id);
             $em->persist($obj);
         }
 
@@ -146,7 +146,7 @@ final class ActionObjectUpdateAfterController extends AbstractHookController imp
             $shopId = (int)$this->getContext()->shop->id;
 
             $mailVars = [
-                '{new_customer_id}' => $this->customer->id,
+                '{new_customer_id}' => (int)$this->customer->id,
                 '{new_customer_last_name}' => $this->customer->lastname,
                 '{new_customer_first_name}' => $this->customer->firstname,
                 '{new_customer_email}' => $this->customer->email,
