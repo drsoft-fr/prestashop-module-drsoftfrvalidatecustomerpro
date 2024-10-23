@@ -81,7 +81,7 @@ final class ValidateCustomerProController extends FrameworkBundleAdminController
                 'error',
                 $this->trans(
                     'Cannot reset the setting. Exception: #%code% - %message%',
-                    'Modules.Drsoftfrvalidatecustomerpro.Admin',
+                    'Modules.Drsoftfrvalidatecustomerpro.Error',
                     [
                         '%code%' => $t->getCode(),
                         '%message%' => $t->getMessage(),
