@@ -8,6 +8,7 @@ use DrSoftFr\Module\ValidateCustomerPro\Controller\Hook\ActionAuthenticationCont
 use DrSoftFr\Module\ValidateCustomerPro\Controller\Hook\ActionCustomerAccountAddController;
 use DrSoftFr\Module\ValidateCustomerPro\Controller\Hook\ActionFrontControllerSetVariablesController;
 use DrSoftFr\Module\ValidateCustomerPro\Controller\Hook\ActionListMailThemesController;
+use DrSoftFr\Module\ValidateCustomerPro\Controller\Hook\ActionObjectUpdateAfterController;
 use DrSoftFr\Module\ValidateCustomerPro\Install\Factory\InstallerFactory;
 use DrSoftFr\Module\ValidateCustomerPro\Install\Installer;
 use PrestaShop\PrestaShop\Core\Cache\Clearer\CacheClearerChain;
@@ -241,6 +242,19 @@ class drsoftfrvalidatecustomerpro extends Module
         $controller = new ActionListMailThemesController($this, $file, $this->_path, $p);
 
         $controller->run();
+    }
+
+    /**
+     * @param array $p
+     *
+     * @return bool
+     */
+    public function hookActionObjectUpdateAfter(array $p = []): bool
+    {
+        $file = _PS_MODULE_DIR_ . $this->name . '/' . $this->name . '.php';
+        $controller = new ActionObjectUpdateAfterController($this, $file, $this->_path, $p);
+
+        return $controller->run();
     }
 
     /**
