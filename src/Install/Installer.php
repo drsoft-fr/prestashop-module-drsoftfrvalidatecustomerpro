@@ -18,6 +18,7 @@ final class Installer
     use executeSqlFromFileTrait;
 
     const HOOKS = [
+        'actionAuthentication',
         'actionCustomerAccountAdd',
         'actionListMailThemes',
     ];
