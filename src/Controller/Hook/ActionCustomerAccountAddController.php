@@ -101,9 +101,7 @@ final class ActionCustomerAccountAddController extends AbstractHookController im
      */
     private function checkData(): void
     {
-        if (
-            !empty($this->props['newCustomer'])
-        ) {
+        if (empty($this->props['newCustomer'])) {
             throw new Exception('New customer is empty.');
         }
 
