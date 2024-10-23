@@ -31,7 +31,7 @@ final class ActionFrontControllerSetVariablesController extends AbstractHookCont
     private function checkData(): bool
     {
         if (
-            !empty($this->getContext()->customer)
+            empty($this->getContext()->customer)
         ) {
             return false;
         }

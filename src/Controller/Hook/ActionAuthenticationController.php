@@ -42,7 +42,7 @@ final class ActionAuthenticationController extends AbstractHookController implem
     private function checkData(): bool
     {
         if (
-            !empty($this->getContext()->customer)
+            empty($this->getContext()->customer)
         ) {
             return false;
         }
