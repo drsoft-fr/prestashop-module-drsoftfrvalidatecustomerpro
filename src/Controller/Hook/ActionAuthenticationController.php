@@ -13,7 +13,6 @@ use DrSoftFr\PrestaShopModuleHelper\Controller\Hook\AbstractHookController;
 use DrSoftFr\PrestaShopModuleHelper\Controller\Hook\HookControllerInterface;
 use Exception;
 use Throwable;
-use Tools;
 
 final class ActionAuthenticationController extends AbstractHookController implements HookControllerInterface
 {
@@ -78,17 +77,26 @@ final class ActionAuthenticationController extends AbstractHookController implem
         }
 
         if (!empty($this->settings['cms_not_activated_id'])) {
-            Tools::Redirect(
-                $this->getContext()
-                    ->link
-                    ->getCMSLink(
-                        (int)$this->settings['cms_not_activated_id'],
-                        null,
-                        null,
-                        $this->langId
-                    )
-            );
+            $link = $this
+                ->getContext()
+                ->link
+                ->getCMSLink(
+                    (int)$this->settings['cms_not_activated_id'],
+                    null,
+                    null,
+                    $this->langId
+                );
+        } else {
+            $link = $this
+                ->getContext()
+                ->link
+                ->getPageLink('index');
         }
+
+        $this
+            ->getContext()
+            ->controller
+            ->redirectWithNotifications($link);
     }
 
     /**
@@ -143,21 +151,23 @@ final class ActionAuthenticationController extends AbstractHookController implem
 
         if (null === $obj) {
             throw new AdapterCustomerNotFoundException(sprintf(
-                    'Manufacturer with id_customer "%d" was not found',
-                (int)$this->customer->id
+                    'Customer with id_customer "%d" was not found',
+                    (int)$this->customer->id
                 )
             );
         }
 
-        if (false === $obj->isActive()) {
-            $alert = $this->getContext()->getTranslator()->trans(
-                'Your customer account has not yet been validated by our teams.',
-                [],
-                'Modules.Drsoftfrvalidatecustomerpro.Error'
-            );
-
-            $this->handleCustomerLogout($alert);
+        if (true === $obj->isActive()) {
+            return;
         }
+
+        $alert = $this->getContext()->getTranslator()->trans(
+            'Your customer account has not yet been validated by our teams.',
+            [],
+            'Modules.Drsoftfrvalidatecustomerpro.Error'
+        );
+
+        $this->handleCustomerLogout($alert);
     }
 
     /**
