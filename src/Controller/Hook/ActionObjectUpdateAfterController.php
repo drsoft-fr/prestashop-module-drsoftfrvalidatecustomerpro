@@ -17,7 +17,6 @@ use Mail;
 use PrestaShopDatabaseException;
 use PrestaShopException;
 use Throwable;
-use Validate;
 
 final class ActionObjectUpdateAfterController extends AbstractHookController implements HookControllerInterface
 {
@@ -57,28 +56,6 @@ final class ActionObjectUpdateAfterController extends AbstractHookController imp
     }
 
     /**
-     * Checks the Siret data for validity.
-     *
-     * Ensures that the Siret data is not empty and is a valid Siret number.
-     *
-     * @return bool Returns true if the Siret data is valid, otherwise throws an Exception.
-     *
-     * @throws Exception
-     */
-    private function checkSiretData(): bool
-    {
-        if (empty($this->customer->siret)) {
-            return false;
-        }
-
-        if (!Validate::isSiret($this->customer->siret)) {
-            throw new Exception('Siret is not valid.');
-        }
-
-        return true;
-    }
-
-    /**
      * Handles an exception by logging an error message.
      *
      * @param Throwable $t The exception to handle.
@@ -108,6 +85,10 @@ final class ActionObjectUpdateAfterController extends AbstractHookController imp
      */
     private function handleValidationCustomer(): bool
     {
+        if (false === (bool)$this->customer->active) {
+            return true;
+        }
+
         /** @var EntityManagerInterface $em */
         $em = $this->module->get('doctrine.orm.entity_manager');
 
@@ -116,72 +97,60 @@ final class ActionObjectUpdateAfterController extends AbstractHookController imp
 
         /** @var AdapterCustomer $obj */
         $obj = $repository->findOneBy([
-            'idCustomer' => (int)$this->customer->id
+            'idCustomer' => (int)$this->customer->id,
+            'active' => false
         ]);
 
         if (null === $obj) {
-            if (false === $this->checkSiretData()) {
-                return true;
-            }
-
-            $obj = new AdapterCustomer();
-
-            $obj->setIdCustomer((int)$this->customer->id);
-            $em->persist($obj);
+            return true;
         }
 
-        $oldActivation = $obj->isActive();
-        $obj->setActive((bool)$this->customer->active);
+        $obj->setActive(true);
         $em->flush();
 
         if (false === $this->settings['enable_email_approval']) {
             return true;
         }
 
-        if (
-            false === $oldActivation &&
-            true === $obj->isActive()
-        ) {
-            $language = new Language($this->langId);
-            $shopId = (int)$this->getContext()->shop->id;
+        $language = new Language($this->langId);
+        $shopId = (int)$this->getContext()->shop->id;
 
-            $mailVars = [
-                '{new_customer_id}' => (int)$this->customer->id,
-                '{new_customer_last_name}' => $this->customer->lastname,
-                '{new_customer_first_name}' => $this->customer->firstname,
-                '{new_customer_email}' => $this->customer->email,
-                '{new_customer_link}' => $this->getContext()->link->getPageLink('my-account'),
-            ];
+        $mailVars = [
+            '{new_customer_id}' => (int)$this->customer->id,
+            '{new_customer_last_name}' => $this->customer->lastname,
+            '{new_customer_first_name}' => $this->customer->firstname,
+            '{new_customer_email}' => $this->customer->email,
+            '{new_customer_link}' => $this->getContext()->link->getPageLink('my-account'),
+        ];
 
 
-            if (empty($this->customer->email)) {
-                throw new Exception('Action customer account add email is not defined');
-            }
+        if (empty($this->customer->email)) {
+            throw new Exception('Action customer account add email is not defined');
+        }
 
-            $result = Mail::send(
-                $this->langId,
-                'validate_account',
-                $this->getContext()->getTranslator()->trans(
-                    'Your account has been activated !',
-                    [],
-                    'Modules.Drsoftfrvalidatecustomerpro.Email',
-                    $language->locale
-                ),
-                $mailVars,
-                $this->customer->email,
-                (string)$this->customer->firstname . ' ' . (string)$this->customer->lastname,
-                null,
-                null,
-                null,
-                null,
-                _PS_MODULE_DIR_ . $this->module->name . '/mails/',
-                false,
-                $shopId
-            );
+        $result = Mail::send(
+            $this->langId,
+            'validate_account',
+            $this->getContext()->getTranslator()->trans(
+                'Your account has been activated !',
+                [],
+                'Modules.Drsoftfrvalidatecustomerpro.Email',
+                $language->locale
+            ),
+            $mailVars,
+            $this->customer->email,
+            (string)$this->customer->firstname . ' ' . (string)$this->customer->lastname,
+            null,
+            null,
+            null,
+            null,
+            _PS_MODULE_DIR_ . $this->module->name . '/mails/',
+            false,
+            $shopId
+        );
 
-            if (!$result) {
-                throw new Exception('An error occurred while sending the account activation e-mail.');
-            }
+        if (!$result) {
+            throw new Exception('An error occurred while sending the account activation e-mail.');
         }
 
         return true;
