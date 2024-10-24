@@ -16,7 +16,6 @@ use Language;
 use Mail;
 use PrestaShopException;
 use Throwable;
-use Tools;
 use Validate;
 
 final class ActionCustomerAccountAddController extends AbstractHookController implements HookControllerInterface
@@ -50,7 +49,7 @@ final class ActionCustomerAccountAddController extends AbstractHookController im
     ];
 
     /**
-     * @var bool $customerIsUpdated
+     * @var bool $customerIsUpdated Flag indicating if customer information has been updated
      */
     private $customerIsUpdated = false;
 
@@ -115,9 +114,7 @@ final class ActionCustomerAccountAddController extends AbstractHookController im
      *
      * Ensures that the Siret data is not empty and is a valid Siret number.
      *
-     * @return bool Returns true if the Siret data is valid, otherwise throws an Exception.
-     *
-     * @throws Exception
+     * @return bool Returns true if the Siret data is valid.
      */
     private function checkSiretData(): bool
     {
@@ -126,7 +123,7 @@ final class ActionCustomerAccountAddController extends AbstractHookController im
         }
 
         if (!Validate::isSiret($this->customer->siret)) {
-            throw new Exception('Siret is not valid.');
+            return false;
         }
 
         return true;
@@ -163,12 +160,16 @@ final class ActionCustomerAccountAddController extends AbstractHookController im
      * @param array $mailVars An array of variables to be used in the email template.
      * @param int $shopId The ID of the shop for which the email is sent.
      *
-     * @return void
+     * @return ActionCustomerAccountAddController
      *
      * @throws Exception
      */
-    private function handleAdminEmail(int $langId, Language $language, array $mailVars, int $shopId): void
+    private function handleAdminEmail(int $langId, Language $language, array $mailVars, int $shopId): ActionCustomerAccountAddController
     {
+        if (false === $this->settings['admin_send_email_on_action_customer_account_add_hook']) {
+            return $this;
+        }
+
         if (empty($this->settings['admin_action_customer_account_add_email'])) {
             throw new Exception('Admin action customer account add email is not defined');
         }
@@ -197,6 +198,38 @@ final class ActionCustomerAccountAddController extends AbstractHookController im
         if (!$result) {
             throw new Exception('Failure to send e-mail to the admin when registering a new customer.');
         }
+
+        return $this;
+    }
+
+    /**
+     * Handle the alert feature for the customer account.
+     *
+     * This method checks if manual validation of the account is enabled in the module settings.
+     * If manual validation is enabled, it adds a success message to the controller with a confirmation message for the user.
+     * If manual validation is not enabled, it simply returns the current instance of the class.
+     *
+     * @return ActionCustomerAccountAddController Returns the current instance of the class for method chaining.
+     *
+     * @throws Exception
+     */
+    private function handleAlert(): ActionCustomerAccountAddController
+    {
+        if (false === $this->settings['enable_manual_validation_account']) {
+            return $this;
+        }
+
+        if (false === $this->settings['enable_unapproved_customer_alert']) {
+            return $this;
+        }
+
+        $this->getContext()->controller->success[] = $this->getContext()->getTranslator()->trans(
+            'Registration successfully. Your account need to be activated. You will receive a confirmation soon.',
+            [],
+            'Modules.Drsoftfrvalidatecustomerpro.Success'
+        );
+
+        return $this;
     }
 
     /**
@@ -207,12 +240,16 @@ final class ActionCustomerAccountAddController extends AbstractHookController im
      * @param array $mailVars Array of mail variables.
      * @param int $shopId The shop ID for sending the email.
      *
-     * @return void
+     * @return ActionCustomerAccountAddController
      *
      * @throws Exception
      */
-    private function handleCustomerEmail(int $langId, Language $language, array $mailVars, int $shopId): void
+    private function handleCustomerEmail(int $langId, Language $language, array $mailVars, int $shopId): ActionCustomerAccountAddController
     {
+        if (false === $this->settings['enable_email_pending_approval']) {
+            return $this;
+        }
+
         if (empty($this->customer->email)) {
             throw new Exception('Action customer account add email is not defined');
         }
@@ -241,17 +278,23 @@ final class ActionCustomerAccountAddController extends AbstractHookController im
         if (!$result) {
             throw new Exception('Failure to send e-mail when registering a new customer.');
         }
+
+        return $this;
     }
 
     /**
      * Handles setting the default group for a customer and saves the customer group.
      *
-     * @return void
+     * @return ActionCustomerAccountAddController
      *
      * @throws Exception|PrestaShopException When the customer group id is not set or when unable to save the customer group.
      */
-    private function handleCustomerGroup(): void
+    private function handleCustomerGroup(): ActionCustomerAccountAddController
     {
+        if (false === $this->settings['enable_auto_customer_group_selection']) {
+            return $this;
+        }
+
         if (empty($this->settings['customer_group_id'])) {
             throw new Exception('Customer group id must be set.');
         }
@@ -261,6 +304,8 @@ final class ActionCustomerAccountAddController extends AbstractHookController im
         $this->customerIsUpdated = true;
 
         $this->customer->addGroups([$groupId]);
+
+        return $this;
     }
 
     /**
@@ -270,30 +315,45 @@ final class ActionCustomerAccountAddController extends AbstractHookController im
      * If the customer group has been updated, attempts to save the Customer group.
      * Throws an exception if unable to save the Customer group.
      *
-     * @return void
+     * @return ActionCustomerAccountAddController
      *
      * @throws PrestaShopException
+     * @throws Exception
      */
-    private function handleCustomerSave(): void
+    private function handleCustomerSave(): ActionCustomerAccountAddController
     {
         if (false === $this->customerIsUpdated) {
-            return;
+            return $this;
         }
 
         if (!$this->customer->save()) {
             throw new Exception('Unable to save Customer group.');
         }
+
+        return $this;
     }
 
     /**
      * Handles sending emails based on certain conditions.
      *
-     * @return void
+     * @return ActionCustomerAccountAddController
      *
      * @throws Exception
      */
-    private function handleEmail()
+    private function handleEmail(): ActionCustomerAccountAddController
     {
+        // TODO il faut tester le fonctionnement des mails sur un vrai serveur.
+        if (false === $this->settings['enable_manual_validation_account']) {
+            return $this;
+        }
+
+        if (
+            false === $this->settings['admin_send_email_on_action_customer_account_add_hook'] &&
+            false === $this->settings['enable_email_pending_approval']
+        ) {
+            return $this;
+        }
+
         $language = new Language($this->langId);
         $shopId = (int)$this->getContext()->shop->id;
 
@@ -305,13 +365,11 @@ final class ActionCustomerAccountAddController extends AbstractHookController im
             '{new_customer_email}' => $this->customer->email,
         ];
 
-        if (true === $this->settings['admin_send_email_on_action_customer_account_add_hook']) {
-            $this->handleAdminEmail($this->langId, $language, $mailVars, $shopId);
-        }
+        $this
+            ->handleAdminEmail($this->langId, $language, $mailVars, $shopId)
+            ->handleCustomerEmail($this->langId, $language, $mailVars, $shopId);
 
-        if (true === $this->settings['enable_email_pending_approval']) {
-            $this->handleCustomerEmail($this->langId, $language, $mailVars, $shopId);
-        }
+        return $this;
     }
 
     /**
@@ -334,6 +392,43 @@ final class ActionCustomerAccountAddController extends AbstractHookController im
     }
 
     /**
+     * Handle the execution of the redirection process.
+     *
+     * This method checks if manual validation account is enabled in the settings.
+     * If manual validation is not enabled or if the CMS notify ID is empty, the method stops execution and returns early.
+     * Otherwise, it redirects the user to the CMS link based on the provided CMS notify ID.
+     *
+     * @return void
+     *
+     * @throws Exception
+     */
+    private function handleRedirection(): void
+    {
+        if (false === $this->settings['enable_manual_validation_account']) {
+            return;
+        }
+
+        if (empty($this->settings['cms_notify_id'])) {
+            return;
+        }
+
+        $this
+            ->getContext()
+            ->controller
+            ->redirectWithNotifications(
+                $this
+                    ->getContext()
+                    ->link
+                    ->getCMSLink(
+                        (int)$this->settings['cms_notify_id'],
+                        null,
+                        null,
+                        $this->langId
+                    )
+            );
+    }
+
+    /**
      * Handle the validation of a customer account.
      *
      * This method performs various operations to validate a customer account,
@@ -341,12 +436,16 @@ final class ActionCustomerAccountAddController extends AbstractHookController im
      * creating or updating an AdapterCustomer entity in the database with the inactive status.
      * If the new customer account is not created successfully, it throws an Exception.
      *
-     * @return void
+     * @return ActionCustomerAccountAddController
      *
      * @throws Exception
      */
-    private function handleValidationAccount(): void
+    private function handleValidationAccount(): ActionCustomerAccountAddController
     {
+        if (false === $this->settings['enable_manual_validation_account']) {
+            return $this;
+        }
+
         $this->customer->active = 0;
 
         $this->customer->logout();
@@ -377,6 +476,8 @@ final class ActionCustomerAccountAddController extends AbstractHookController im
         if (empty($obj->getId())) {
             throw new Exception('New customer account is not created.');
         }
+
+        return $this;
     }
 
     /**
@@ -393,9 +494,7 @@ final class ActionCustomerAccountAddController extends AbstractHookController im
         try {
             $this->settings = $this->module->get(Config::SETTING_PROVIDER_SERVICE);
 
-            if (
-                false === $this->settings['active']
-            ) {
+            if (false === $this->settings['active']) {
                 return;
             }
 
@@ -408,46 +507,13 @@ final class ActionCustomerAccountAddController extends AbstractHookController im
                 return;
             }
 
-            if (true === $this->settings['enable_auto_customer_group_selection']) {
-                $this->handleCustomerGroup();
-            }
-
-            if (false === $this->settings['enable_manual_validation_account']) {
-                $this->handleCustomerSave();
-
-                return;
-            }
-
-            $this->handleValidationAccount();
-            $this->handleCustomerSave();
-
-            if (
-                true === $this->settings['admin_send_email_on_action_customer_account_add_hook'] ||
-                true === $this->settings['enable_email_pending_approval']
-            ) {
-                $this->handleEmail();
-            }
-
-            if (true === $this->settings['enable_unapproved_customer_alert']) {
-                $this->getContext()->controller->success[] = $this->getContext()->getTranslator()->trans(
-                    'Registration successfully. Your account need to be activated. You will receive a confirmation soon.',
-                    [],
-                    'Modules.Drsoftfrvalidatecustomerpro.Success'
-                );
-            }
-
-            if (!empty($this->settings['cms_notify_id'])) {
-                Tools::Redirect(
-                    $this->getContext()
-                        ->link
-                        ->getCMSLink(
-                            (int)$this->settings['cms_notify_id'],
-                            null,
-                            null,
-                            $this->langId
-                        )
-                );
-            }
+            $this
+                ->handleCustomerGroup()
+                ->handleValidationAccount()
+                ->handleCustomerSave()
+                ->handleEmail()
+                ->handleAlert()
+                ->handleRedirection();
         } catch (Throwable $t) {
             $this->handleException($t);
         }
