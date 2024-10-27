@@ -11,7 +11,7 @@ use DrSoftFr\Module\ValidateCustomerPro\Exception\ValidateCustomerPro\ValidateCu
 use DrSoftFr\PrestaShopModuleHelper\Data\Validator\AbstractValidator;
 use DrSoftFr\PrestaShopModuleHelper\Data\Validator\ValidatorInterface;
 
-final class ValidateCustomerProValidator extends AbstractValidator implements ValidatorInterface
+final class SettingValidator extends AbstractValidator implements ValidatorInterface
 {
     /**
      * @var array
@@ -69,13 +69,13 @@ final class ValidateCustomerProValidator extends AbstractValidator implements Va
      *
      * @param array $configuration The configuration array to validate.
      *
-     * @return ValidateCustomerProValidator
+     * @return SettingValidator
      *
      * @throws ValidateCustomerProConstraintException If the active field is not set.
      * @throws ValidateCustomerProConstraintException If the active field is not a boolean value.
      * @throws Exception
      */
-    private function validateActive(array $configuration): ValidateCustomerProValidator
+    private function validateActive(array $configuration): SettingValidator
     {
         $this->isSet($configuration, 'active', new ValidateCustomerProConstraintException);
         $this->isBool($configuration, 'active', new ValidateCustomerProConstraintException);
@@ -89,14 +89,14 @@ final class ValidateCustomerProValidator extends AbstractValidator implements Va
      *
      * @param array $configuration The configuration array to validate.
      *
-     * @return ValidateCustomerProValidator
+     * @return SettingValidator
      *
      * @throws ValidateCustomerProConstraintException If admin_send_email_on_action_customer_account_add_hook is true but admin_action_customer_account_add_email field is not set.
      * @throws ValidateCustomerProConstraintException If admin_send_email_on_action_customer_account_add_hook is true but admin_action_customer_account_add_email field is empty.
      * @throws ValidateCustomerProConstraintException If admin_send_email_on_action_customer_account_add_hook is true but admin_action_customer_account_add_email field is not a string.
      * @throws Exception
      */
-    private function validateAdminActionCustomerAccountAddEmail(array $configuration): ValidateCustomerProValidator
+    private function validateAdminActionCustomerAccountAddEmail(array $configuration): SettingValidator
     {
         if (!$configuration['admin_send_email_on_action_customer_account_add_hook']) {
             return $this;
@@ -115,13 +115,13 @@ final class ValidateCustomerProValidator extends AbstractValidator implements Va
      *
      * @param array $configuration The configuration array to validate.
      *
-     * @return ValidateCustomerProValidator
+     * @return SettingValidator
      *
      * @throws ValidateCustomerProConstraintException If the admin_send_email_on_action_customer_account_add_hook field is not set.
      * @throws ValidateCustomerProConstraintException If the admin_send_email_on_action_customer_account_add_hook field is not a boolean value.
      * @throws Exception
      */
-    private function validateAdminSendEmailOnActionCustomerAccountAddHook(array $configuration): ValidateCustomerProValidator
+    private function validateAdminSendEmailOnActionCustomerAccountAddHook(array $configuration): SettingValidator
     {
         $this->isSet($configuration, 'admin_send_email_on_action_customer_account_add_hook', new ValidateCustomerProConstraintException);
         $this->isBool($configuration, 'admin_send_email_on_action_customer_account_add_hook', new ValidateCustomerProConstraintException);
@@ -134,11 +134,11 @@ final class ValidateCustomerProValidator extends AbstractValidator implements Va
      *
      * @param array $configuration The configuration array to validate.
      *
-     * @return ValidateCustomerProValidator
+     * @return SettingValidator
      *
      * @throws NonexistentCmsPageIdException If the 'cms_notify_id' field is not a valid ID.
      */
-    private function validateCmsNotifyId(array $configuration): ValidateCustomerProValidator
+    private function validateCmsNotifyId(array $configuration): SettingValidator
     {
         if (empty($configuration['cms_notify_id'])) {
             return $this;
@@ -170,11 +170,11 @@ final class ValidateCustomerProValidator extends AbstractValidator implements Va
      *
      * @param array $configuration The configuration array to validate.
      *
-     * @return ValidateCustomerProValidator
+     * @return SettingValidator
      *
      * @throws NonexistentCmsPageIdException If the 'cms_not_activated_id' field is not a valid ID.
      */
-    private function validateCmsNotActivatedId(array $configuration): ValidateCustomerProValidator
+    private function validateCmsNotActivatedId(array $configuration): SettingValidator
     {
         if (empty($configuration['cms_not_activated_id'])) {
             return $this;
@@ -206,11 +206,11 @@ final class ValidateCustomerProValidator extends AbstractValidator implements Va
      *
      * @param array $configuration The configuration array to validate.
      *
-     * @return ValidateCustomerProValidator
+     * @return SettingValidator
      *
      * @throws NonexistentGroupIdException If the 'customer_group_id' field is not a valid ID.
      */
-    private function validateCustomerGroupId(array $configuration): ValidateCustomerProValidator
+    private function validateCustomerGroupId(array $configuration): SettingValidator
     {
         if (!$configuration['enable_auto_customer_group_selection']) {
             return $this;
@@ -247,13 +247,13 @@ final class ValidateCustomerProValidator extends AbstractValidator implements Va
      *
      * @param array $configuration The configuration array to validate.
      *
-     * @return ValidateCustomerProValidator
+     * @return SettingValidator
      *
      * @throws ValidateCustomerProConstraintException If the enable_auto_customer_group_selection field is not set.
      * @throws ValidateCustomerProConstraintException If the enable_auto_customer_group_selection field is not a boolean value.
      * @throws Exception
      */
-    private function validateEnableAutoCustomerGroupSelection(array $configuration): ValidateCustomerProValidator
+    private function validateEnableAutoCustomerGroupSelection(array $configuration): SettingValidator
     {
         $this->isSet($configuration, 'enable_auto_customer_group_selection', new ValidateCustomerProConstraintException);
         $this->isBool($configuration, 'enable_auto_customer_group_selection', new ValidateCustomerProConstraintException);
@@ -267,13 +267,13 @@ final class ValidateCustomerProValidator extends AbstractValidator implements Va
      *
      * @param array $configuration The configuration array to validate.
      *
-     * @return ValidateCustomerProValidator
+     * @return SettingValidator
      *
      * @throws ValidateCustomerProConstraintException If the enable_email_approval field is not set.
      * @throws ValidateCustomerProConstraintException If the enable_email_approval field is not a boolean value.
      * @throws Exception
      */
-    private function validateEnableEmailApproval(array $configuration): ValidateCustomerProValidator
+    private function validateEnableEmailApproval(array $configuration): SettingValidator
     {
         $this->isSet($configuration, 'enable_email_approval', new ValidateCustomerProConstraintException);
         $this->isBool($configuration, 'enable_email_approval', new ValidateCustomerProConstraintException);
@@ -287,13 +287,13 @@ final class ValidateCustomerProValidator extends AbstractValidator implements Va
      *
      * @param array $configuration The configuration array to validate.
      *
-     * @return ValidateCustomerProValidator
+     * @return SettingValidator
      *
      * @throws ValidateCustomerProConstraintException If the enable_email_pending_approval field is not set.
      * @throws ValidateCustomerProConstraintException If the enable_email_pending_approval field is not a boolean value.
      * @throws Exception
      */
-    private function validateEnableEmailPendingApproval(array $configuration): ValidateCustomerProValidator
+    private function validateEnableEmailPendingApproval(array $configuration): SettingValidator
     {
         $this->isSet($configuration, 'enable_email_pending_approval', new ValidateCustomerProConstraintException);
         $this->isBool($configuration, 'enable_email_pending_approval', new ValidateCustomerProConstraintException);
@@ -307,13 +307,13 @@ final class ValidateCustomerProValidator extends AbstractValidator implements Va
      *
      * @param array $configuration The configuration array to validate.
      *
-     * @return ValidateCustomerProValidator
+     * @return SettingValidator
      *
      * @throws ValidateCustomerProConstraintException If the enable_manual_validation_account field is not set.
      * @throws ValidateCustomerProConstraintException If the enable_manual_validation_account field is not a boolean value.
      * @throws Exception
      */
-    private function validateEnableManualValidationAccount(array $configuration): ValidateCustomerProValidator
+    private function validateEnableManualValidationAccount(array $configuration): SettingValidator
     {
         $this->isSet($configuration, 'enable_manual_validation_account', new ValidateCustomerProConstraintException);
         $this->isBool($configuration, 'enable_manual_validation_account', new ValidateCustomerProConstraintException);
@@ -327,13 +327,13 @@ final class ValidateCustomerProValidator extends AbstractValidator implements Va
      *
      * @param array $configuration The configuration array to validate.
      *
-     * @return ValidateCustomerProValidator
+     * @return SettingValidator
      *
      * @throws ValidateCustomerProConstraintException If the require_company_field field is not set.
      * @throws ValidateCustomerProConstraintException If the require_company_field field is not a boolean value.
      * @throws Exception
      */
-    private function validateRequireCompanyField(array $configuration): ValidateCustomerProValidator
+    private function validateRequireCompanyField(array $configuration): SettingValidator
     {
         $this->isSet($configuration, 'require_company_field', new ValidateCustomerProConstraintException);
         $this->isBool($configuration, 'require_company_field', new ValidateCustomerProConstraintException);
@@ -347,13 +347,13 @@ final class ValidateCustomerProValidator extends AbstractValidator implements Va
      *
      * @param array $configuration The configuration array to validate.
      *
-     * @return ValidateCustomerProValidator
+     * @return SettingValidator
      *
      * @throws ValidateCustomerProConstraintException If the require_siret_field field is not set.
      * @throws ValidateCustomerProConstraintException If the require_siret_field field is not a boolean value.
      * @throws Exception
      */
-    private function validateRequireSiretField(array $configuration): ValidateCustomerProValidator
+    private function validateRequireSiretField(array $configuration): SettingValidator
     {
         $this->isSet($configuration, 'require_siret_field', new ValidateCustomerProConstraintException);
         $this->isBool($configuration, 'require_siret_field', new ValidateCustomerProConstraintException);
@@ -367,13 +367,13 @@ final class ValidateCustomerProValidator extends AbstractValidator implements Va
      *
      * @param array $configuration The configuration array to validate.
      *
-     * @return ValidateCustomerProValidator
+     * @return SettingValidator
      *
      * @throws ValidateCustomerProConstraintException If the enable_unauthenticated_customer_alert field is not set.
      * @throws ValidateCustomerProConstraintException If the enable_unauthenticated_customer_alert field is not a boolean value.
      * @throws Exception
      */
-    private function validateEnableUnauthenticatedCustomerAlert(array $configuration): ValidateCustomerProValidator
+    private function validateEnableUnauthenticatedCustomerAlert(array $configuration): SettingValidator
     {
         $this->isSet($configuration, 'enable_unauthenticated_customer_alert', new ValidateCustomerProConstraintException);
         $this->isBool($configuration, 'enable_unauthenticated_customer_alert', new ValidateCustomerProConstraintException);

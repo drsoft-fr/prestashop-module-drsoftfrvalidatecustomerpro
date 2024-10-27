@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace DrSoftFr\Module\ValidateCustomerPro\Data\Configuration;
 
 use DrSoftFr\Module\ValidateCustomerPro\Config;
-use DrSoftFr\Module\ValidateCustomerPro\Data\Validator\ValidateCustomerProValidator;
+use DrSoftFr\Module\ValidateCustomerPro\Data\Validator\SettingValidator;
 use Exception;
 use PrestaShop\PrestaShop\Adapter\Configuration;
 use PrestaShop\PrestaShop\Core\Configuration\DataConfigurationInterface;
@@ -58,17 +58,17 @@ final class SettingConfiguration implements DataConfigurationInterface
     private $configuration;
 
     /**
-     * @var ValidateCustomerProValidator|null
+     * @var SettingValidator|null
      */
-    private ?ValidateCustomerProValidator $validator;
+    private ?SettingValidator $validator;
 
     /**
      * @param Configuration $configuration
-     * @param ValidateCustomerProValidator|null $validator
+     * @param SettingValidator|null $validator
      */
     public function __construct(
         Configuration                $configuration,
-        ValidateCustomerProValidator $validator = null
+        SettingValidator $validator = null
     )
     {
         $this->configuration = $configuration;
