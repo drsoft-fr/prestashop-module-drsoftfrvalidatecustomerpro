@@ -9,9 +9,9 @@ use DrSoftFr\Module\ValidateCustomerPro\Data\Configuration\SettingConfiguration;
 use PrestaShop\PrestaShop\Core\Form\FormDataProviderInterface;
 
 /**
- * Class ValidateCustomerProFormDataProvider is in charge of accessing/saving the ValidateCustomerPro settings in PrestaShop configuration
+ * Class SettingFormDataProvider is in charge of accessing/saving the ValidateCustomerPro settings in PrestaShop configuration
  */
-final class ValidateCustomerProFormDataProvider implements FormDataProviderInterface
+final class SettingFormDataProvider implements FormDataProviderInterface
 {
     /**
      * @var SettingConfiguration

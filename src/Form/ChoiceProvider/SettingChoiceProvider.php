@@ -7,11 +7,11 @@ namespace DrSoftFr\Module\ValidateCustomerPro\Form\ChoiceProvider;
 use PrestaShop\PrestaShop\Adapter\Group\GroupDataProvider;
 
 /**
- * Class ValidateCustomerProChoiceProvider
+ * Class SettingChoiceProvider
  *
  * This class provides a choice list of groups.
  */
-final class ValidateCustomerProChoiceProvider
+final class SettingChoiceProvider
 {
     /**
      * @var GroupDataProvider

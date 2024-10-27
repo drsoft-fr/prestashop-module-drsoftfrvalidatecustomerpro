@@ -16,12 +16,12 @@ use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Length;
 
 /**
- * Class ValidateCustomerProType
+ * Class SettingType
  *
  * This class represents a form type for managing settings.
  * It extends the TranslatorAwareType class for translation support.
  */
-final class ValidateCustomerProType extends TranslatorAwareType
+final class SettingType extends TranslatorAwareType
 {
     /**
      * @var array
