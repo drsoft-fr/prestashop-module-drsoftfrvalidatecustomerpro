@@ -7,9 +7,9 @@ namespace DrSoftFr\Module\ValidateCustomerPro\Data\Factory;
 use DrSoftFr\Module\ValidateCustomerPro\Data\Configuration\SettingConfiguration;
 
 /**
- * Class ValidateCustomerProDataFactory is in charge of accessing the ValidateCustomerPro settings in PrestaShop configuration
+ * Class SettingDataFactory is in charge of accessing the ValidateCustomerPro settings in PrestaShop configuration
  */
-final class ValidateCustomerProDataFactory
+final class SettingDataFactory
 {
     /**
      * @var SettingConfiguration

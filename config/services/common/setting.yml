@@ -8,7 +8,7 @@ services:
 
     # Data factory
     drsoft_fr.module.validate_customer_pro.data.factory.setting_data_factory:
-        class: DrSoftFr\Module\ValidateCustomerPro\Data\Factory\ValidateCustomerProDataFactory
+        class: DrSoftFr\Module\ValidateCustomerPro\Data\Factory\SettingDataFactory
         arguments:
             - '@drsoft_fr.module.validate_customer_pro.data.configuration.setting_configuration'
 
@@ -21,6 +21,6 @@ services:
         public: true
 
     drsoft_fr.module.validate_customer_pro.data.setting_data_provider:
-        class: DrSoftFr\Module\ValidateCustomerPro\Data\Factory\ValidateCustomerProDataFactory
+        class: DrSoftFr\Module\ValidateCustomerPro\Data\Factory\SettingDataFactory
         factory: 'drsoft_fr.module.validate_customer_pro.data.factory.setting_data_factory:getData'
         public: true
