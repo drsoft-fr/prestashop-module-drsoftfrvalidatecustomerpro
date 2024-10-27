@@ -1,33 +1,33 @@
 services:
     # Form services
-    drsoft_fr.module.validate_customer_pro.form.data_provider.validate_customer_pro_form_data_provider:
+    drsoft_fr.module.validate_customer_pro.form.data_provider.setting_form_data_provider:
         class: DrSoftFr\Module\ValidateCustomerPro\Form\DataProvider\ValidateCustomerProFormDataProvider
         arguments:
-            - '@drsoft_fr.module.validate_customer_pro.data.configuration.validate_customer_pro_configuration'
+            - '@drsoft_fr.module.validate_customer_pro.data.configuration.setting_configuration'
 
-    drsoft_fr.module.validate_customer_pro.form.choice_provider.validate_customer_pro_choice_provider:
+    drsoft_fr.module.validate_customer_pro.form.choice_provider.setting_choice_provider:
         class: DrSoftFr\Module\ValidateCustomerPro\Form\ChoiceProvider\ValidateCustomerProChoiceProvider
         arguments:
             - '@prestashop.adapter.data_provider.group'
             - '@=service("prestashop.adapter.legacy.context").getLanguage().id'
             - '@=service("prestashop.adapter.legacy.context").getContext().shop.id'
 
-    drsoft_fr.module.validate_customer_pro.form.handler.validate_customer_pro_form_handler:
+    drsoft_fr.module.validate_customer_pro.form.handler.setting_form_handler:
         class: PrestaShop\PrestaShop\Core\Form\Handler
         arguments:
             - '@form.factory'
             - '@prestashop.core.hook.dispatcher'
-            - '@drsoft_fr.module.validate_customer_pro.form.data_provider.validate_customer_pro_form_data_provider'
+            - '@drsoft_fr.module.validate_customer_pro.form.data_provider.setting_form_data_provider'
             - DrSoftFr\Module\ValidateCustomerPro\Form\ValidateCustomerProType
             - 'DrSoftFrModuleValidateCustomerProSetting'
         public: true
 
     # setting form
-    drsoft_fr.module.validate_customer_pro.form.validate_customer_pro_type:
+    drsoft_fr.module.validate_customer_pro.form.setting_type:
         class: DrSoftFr\Module\ValidateCustomerPro\Form\ValidateCustomerProType
         parent: 'form.type.translatable.aware'
         arguments:
             - '@=service("prestashop.adapter.data_provider.cms").getCmsChoices()'
-            - '@=service("drsoft_fr.module.validate_customer_pro.form.choice_provider.validate_customer_pro_choice_provider").getGroupChoices()'
+            - '@=service("drsoft_fr.module.validate_customer_pro.form.choice_provider.setting_choice_provider").getGroupChoices()'
         tags:
             - { name: form.type }

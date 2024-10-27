@@ -176,7 +176,7 @@ final class SettingController extends FrameworkBundleAdminController
      */
     protected function getValidateCustomerProConfiguration(): ValidateCustomerProConfiguration
     {
-        return $this->get('drsoft_fr.module.validate_customer_pro.data.configuration.validate_customer_pro_configuration');
+        return $this->get('drsoft_fr.module.validate_customer_pro.data.configuration.setting_configuration');
     }
 
     /**
@@ -186,6 +186,6 @@ final class SettingController extends FrameworkBundleAdminController
      */
     protected function getValidateCustomerProFormHandler(): FormHandlerInterface
     {
-        return $this->get('drsoft_fr.module.validate_customer_pro.form.handler.validate_customer_pro_form_handler');
+        return $this->get('drsoft_fr.module.validate_customer_pro.form.handler.setting_form_handler');
     }
 }
