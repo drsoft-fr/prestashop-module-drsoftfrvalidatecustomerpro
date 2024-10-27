@@ -2,10 +2,16 @@
 
 {% trans_default_domain "Modules.Drsoftfrvalidatecustomerpro.Admin" %}
 
+{% block content_header %}
+    {{ parent() }}
+
+    {% include '@Modules/drsoftfrvalidatecustomerpro/views/templates/admin/common/layout/_nav.html.twig' %}
+{% endblock %}
+
 {% block content %}
     {{ block('main') }}
 {% endblock %}
 
 {% block content_footer %}
-    {% include '@Modules/drsoftfrvalidatecustomerpro/views/templates/admin/layout/_footer.html.twig' %}
+    {% include '@Modules/drsoftfrvalidatecustomerpro/views/templates/admin/common/layout/_footer.html.twig' %}
 {% endblock %}

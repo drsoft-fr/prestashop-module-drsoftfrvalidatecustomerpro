@@ -3,7 +3,8 @@
 declare(strict_types=1);
 
 use DrSoftFr\Module\ValidateCustomerPro\Config;
-use DrSoftFr\Module\ValidateCustomerPro\Controller\Admin\ValidateCustomerProController;
+use DrSoftFr\Module\ValidateCustomerPro\Controller\Admin\IndexController;
+use DrSoftFr\Module\ValidateCustomerPro\Controller\Admin\SettingController;
 use DrSoftFr\Module\ValidateCustomerPro\Controller\Hook\ActionAuthenticationController;
 use DrSoftFr\Module\ValidateCustomerPro\Controller\Hook\ActionCustomerAccountAddController;
 use DrSoftFr\Module\ValidateCustomerPro\Controller\Hook\ActionFrontControllerSetVariablesController;
@@ -64,10 +65,16 @@ class drsoftfrvalidatecustomerpro extends Module
         $this->tab = 'administration';
         $this->tabs = [
             [
-                'class_name' => ValidateCustomerProController::TAB_CLASS_NAME,
+                'class_name' => IndexController::TAB_CLASS_NAME,
                 'name' => 'Validate Customer Pro',
-                'parent_class_name' => 'AdminParentCustomerPreferences',
+                'parent_class_name' => 'AdminParentCustomer',
                 'route_name' => 'admin_drsoft_fr_validate_customer_pro_index',
+                'visible' => true,
+            ],
+            [
+                'class_name' => SettingController::TAB_CLASS_NAME,
+                'name' => 'Setting',
+                'parent_class_name' => IndexController::TAB_CLASS_NAME,
                 'visible' => false,
             ],
         ];
@@ -170,7 +177,7 @@ class drsoftfrvalidatecustomerpro extends Module
     public function getContent(): void
     {
         Tools::redirectAdmin(
-            $this->context->link->getAdminLink(ValidateCustomerProController::TAB_CLASS_NAME)
+            $this->context->link->getAdminLink(IndexController::TAB_CLASS_NAME)
         );
     }
 

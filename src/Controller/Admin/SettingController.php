@@ -16,13 +16,13 @@ use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
 /**
- * Class ValidateCustomerProController.
+ * Class SettingController.
  *
  * @ModuleActivated(moduleName="drsoftfrvalidatecustomerpro", redirectRoute="admin_module_manage")
  */
-final class ValidateCustomerProController extends FrameworkBundleAdminController
+final class SettingController extends FrameworkBundleAdminController
 {
-    const TAB_CLASS_NAME = 'AdminDrSoftFrValidateCustomerPro';
+    const TAB_CLASS_NAME = 'AdminDrSoftFrValidateCustomerProSetting';
 
     /**
      * Renders the index page of the drSoft.fr ValidateCustomerPro settings.
@@ -43,7 +43,7 @@ final class ValidateCustomerProController extends FrameworkBundleAdminController
             ->getValidateCustomerProFormHandler()
             ->getForm();
 
-        return $this->render('@Modules/drsoftfrvalidatecustomerpro/views/templates/admin/index.html.twig', [
+        return $this->render('@Modules/drsoftfrvalidatecustomerpro/views/templates/admin/setting/index.html.twig', [
             'enableSidebar' => true,
             'form' => $form->createView(),
             'help_link' => $this->generateSidebarLink($request->attributes->get('_legacy_controller')),
@@ -56,7 +56,7 @@ final class ValidateCustomerProController extends FrameworkBundleAdminController
      *
      * @AdminSecurity(
      *     "is_granted('update', request.get('_legacy_controller'))",
-     *     redirectRoute="admin_drsoft_fr_validate_customer_pro_index",
+     *     redirectRoute="admin_drsoft_fr_validate_customer_pro_setting_index",
      *     message="You do not have permission to reset this."
      * )
      *
@@ -90,7 +90,7 @@ final class ValidateCustomerProController extends FrameworkBundleAdminController
             );
         }
 
-        return $this->redirectToRoute('admin_drsoft_fr_validate_customer_pro_index');
+        return $this->redirectToRoute('admin_drsoft_fr_validate_customer_pro_setting_index');
     }
 
     /**
@@ -98,7 +98,7 @@ final class ValidateCustomerProController extends FrameworkBundleAdminController
      *
      * @AdminSecurity(
      *     "is_granted('update', request.get('_legacy_controller'))",
-     *     redirectRoute="admin_drsoft_fr_validate_customer_pro_index",
+     *     redirectRoute="admin_drsoft_fr_validate_customer_pro_setting_index",
      *     message="You do not have permission to edit this."
      * )
      *
@@ -115,7 +115,7 @@ final class ValidateCustomerProController extends FrameworkBundleAdminController
             $form->handleRequest($request);
 
             if (!$form->isSubmitted()) {
-                return $this->redirectToRoute('admin_drsoft_fr_validate_customer_pro_index');
+                return $this->redirectToRoute('admin_drsoft_fr_validate_customer_pro_setting_index');
             }
 
             if (!$form->isValid()) {
@@ -127,7 +127,7 @@ final class ValidateCustomerProController extends FrameworkBundleAdminController
                     )
                 );
 
-                return $this->redirectToRoute('admin_drsoft_fr_validate_customer_pro_index');
+                return $this->redirectToRoute('admin_drsoft_fr_validate_customer_pro_setting_index');
             }
 
             $errors = $handler->save($form->getData());
@@ -158,7 +158,7 @@ final class ValidateCustomerProController extends FrameworkBundleAdminController
             );
         }
 
-        return $this->redirectToRoute('admin_drsoft_fr_validate_customer_pro_index');
+        return $this->redirectToRoute('admin_drsoft_fr_validate_customer_pro_setting_index');
     }
 
     /**

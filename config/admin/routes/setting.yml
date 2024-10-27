@@ -1,0 +1,21 @@
+admin_drsoft_fr_validate_customer_pro_setting_index:
+    path: /
+    methods: [ GET ]
+    defaults:
+        _controller: DrSoftFr\Module\ValidateCustomerPro\Controller\Admin\SettingController::indexAction
+        _legacy_controller: AdminDrSoftFrValidateCustomerProSetting
+        _legacy_link: AdminDrSoftFrValidateCustomerProSetting
+
+admin_drsoft_fr_validate_customer_pro_setting_reset:
+    path: /reset
+    methods: [ GET ]
+    defaults:
+        _controller: DrSoftFr\Module\ValidateCustomerPro\Controller\Admin\SettingController::resetAction
+        _legacy_controller: AdminDrSoftFrValidateCustomerProSetting
+
+admin_drsoft_fr_validate_customer_pro_setting_save:
+    path: /
+    methods: [ POST ]
+    defaults:
+        _controller: DrSoftFr\Module\ValidateCustomerPro\Controller\Admin\SettingController::saveAction
+        _legacy_controller: AdminDrSoftFrValidateCustomerProSetting
