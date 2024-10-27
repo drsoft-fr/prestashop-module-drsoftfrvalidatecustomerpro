@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace DrSoftFr\Module\ValidateCustomerPro\Exception\ValidateCustomerPro;
+namespace DrSoftFr\Module\ValidateCustomerPro\Exception\Setting;
 
 /**
- * Thrown when ValidateCustomerPro constraints are violated
+ * Thrown when Setting constraints are violated
  */
-class ValidateCustomerProConstraintException extends ValidateCustomerProException
+class SettingConstraintException extends SettingException
 {
     /**
      * When active field is invalid
