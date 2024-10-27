@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace DrSoftFr\Module\ValidateCustomerPro\Install;
 
-use DrSoftFr\Module\ValidateCustomerPro\Data\Configuration\ValidateCustomerProConfiguration;
+use DrSoftFr\Module\ValidateCustomerPro\Data\Configuration\SettingConfiguration;
 use DrSoftFr\PrestaShopModuleHelper\Traits\ExecuteSqlFromFileTrait;
 use Exception;
 use Module;
@@ -26,14 +26,14 @@ final class Installer
     ];
 
     /**
-     * @var ValidateCustomerProConfiguration
+     * @var SettingConfiguration
      */
-    private $validateCustomerProConfiguration;
+    private $settingConfiguration;
 
     public function __construct(
-        ValidateCustomerProConfiguration $validateCustomerProConfiguration)
+        SettingConfiguration $settingConfiguration)
     {
-        $this->validateCustomerProConfiguration = $validateCustomerProConfiguration;
+        $this->settingConfiguration = $settingConfiguration;
     }
 
     /**
@@ -55,7 +55,7 @@ final class Installer
             throw new Exception('An error has occurred while executing the installation SQL resources.');
         }
 
-        $this->validateCustomerProConfiguration->initConfiguration();
+        $this->settingConfiguration->initConfiguration();
 
         return true;
     }
@@ -76,7 +76,7 @@ final class Installer
         }
 
         try {
-            $this->validateCustomerProConfiguration->removeConfiguration();
+            $this->settingConfiguration->removeConfiguration();
         } catch (Throwable $t) {
             throw new Exception('An error occurred when deleting the module parameters.');
         }
@@ -97,10 +97,10 @@ final class Installer
     }
 
     /**
-     * @return ValidateCustomerProConfiguration
+     * @return SettingConfiguration
      */
-    public function getValidateCustomerProConfiguration(): ValidateCustomerProConfiguration
+    public function getSettingConfiguration(): SettingConfiguration
     {
-        return $this->validateCustomerProConfiguration;
+        return $this->settingConfiguration;
     }
 }

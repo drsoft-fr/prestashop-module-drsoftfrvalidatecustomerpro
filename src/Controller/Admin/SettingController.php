@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace DrSoftFr\Module\ValidateCustomerPro\Controller\Admin;
 
-use DrSoftFr\Module\ValidateCustomerPro\Data\Configuration\ValidateCustomerProConfiguration;
+use DrSoftFr\Module\ValidateCustomerPro\Data\Configuration\SettingConfiguration;
 use drsoftfrvalidatecustomerpro;
 use PrestaShop\PrestaShop\Core\Form\FormHandlerInterface;
 use PrestaShopBundle\Controller\Admin\FrameworkBundleAdminController;
@@ -66,7 +66,7 @@ final class SettingController extends FrameworkBundleAdminController
     {
         try {
             $this
-                ->getValidateCustomerProConfiguration()
+                ->getSettingConfiguration()
                 ->initConfiguration();
 
             $this->addFlash(
@@ -172,9 +172,9 @@ final class SettingController extends FrameworkBundleAdminController
     /**
      * Get ValidateCustomerPro configuration.
      *
-     * @return ValidateCustomerProConfiguration
+     * @return SettingConfiguration
      */
-    protected function getValidateCustomerProConfiguration(): ValidateCustomerProConfiguration
+    protected function getSettingConfiguration(): SettingConfiguration
     {
         return $this->get('drsoft_fr.module.validate_customer_pro.data.configuration.setting_configuration');
     }

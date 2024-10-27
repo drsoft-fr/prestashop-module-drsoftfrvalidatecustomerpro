@@ -12,11 +12,11 @@ use PrestaShop\PrestaShop\Core\Configuration\DataConfigurationInterface;
 use Throwable;
 
 /**
- * Class ValidateCustomerProConfiguration
+ * Class SettingConfiguration
  *
  * This class handles the configuration ValidateCustomerPro for the application.
  */
-final class ValidateCustomerProConfiguration implements DataConfigurationInterface
+final class SettingConfiguration implements DataConfigurationInterface
 {
     const CONFIGURATION_KEYS = [
         'active' => 'DRSOFT_FR_VALIDATE_CUSTOMER_PRO_ACTIVE',

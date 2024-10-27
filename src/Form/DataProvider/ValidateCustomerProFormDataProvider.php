@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace DrSoftFr\Module\ValidateCustomerPro\Form\DataProvider;
 
 use Exception;
-use DrSoftFr\Module\ValidateCustomerPro\Data\Configuration\ValidateCustomerProConfiguration;
+use DrSoftFr\Module\ValidateCustomerPro\Data\Configuration\SettingConfiguration;
 use PrestaShop\PrestaShop\Core\Form\FormDataProviderInterface;
 
 /**
@@ -14,15 +14,15 @@ use PrestaShop\PrestaShop\Core\Form\FormDataProviderInterface;
 final class ValidateCustomerProFormDataProvider implements FormDataProviderInterface
 {
     /**
-     * @var ValidateCustomerProConfiguration
+     * @var SettingConfiguration
      */
     private $configuration;
 
     /**
-     * @param ValidateCustomerProConfiguration $configuration
+     * @param SettingConfiguration $configuration
      */
     public function __construct(
-        ValidateCustomerProConfiguration $configuration
+        SettingConfiguration $configuration
     )
     {
         $this->configuration = $configuration;

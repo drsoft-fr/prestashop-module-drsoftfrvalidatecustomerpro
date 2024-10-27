@@ -14,7 +14,7 @@ services:
 
     # Data provider
     drsoft_fr.module.validate_customer_pro.data.configuration.setting_configuration:
-        class: DrSoftFr\Module\ValidateCustomerPro\Data\Configuration\ValidateCustomerProConfiguration
+        class: DrSoftFr\Module\ValidateCustomerPro\Data\Configuration\SettingConfiguration
         arguments:
             - '@prestashop.adapter.legacy.configuration'
             - '@drsoft_fr.module.validate_customer_pro.data.validator.setting_validator'

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace DrSoftFr\Module\ValidateCustomerPro\Data\Factory;
 
-use DrSoftFr\Module\ValidateCustomerPro\Data\Configuration\ValidateCustomerProConfiguration;
+use DrSoftFr\Module\ValidateCustomerPro\Data\Configuration\SettingConfiguration;
 
 /**
  * Class ValidateCustomerProDataFactory is in charge of accessing the ValidateCustomerPro settings in PrestaShop configuration
@@ -12,15 +12,15 @@ use DrSoftFr\Module\ValidateCustomerPro\Data\Configuration\ValidateCustomerProCo
 final class ValidateCustomerProDataFactory
 {
     /**
-     * @var ValidateCustomerProConfiguration
+     * @var SettingConfiguration
      */
     private $configuration;
 
     /**
-     * @param ValidateCustomerProConfiguration $configuration
+     * @param SettingConfiguration $configuration
      */
     public function __construct(
-        ValidateCustomerProConfiguration $configuration
+        SettingConfiguration $configuration
     )
     {
         $this->configuration = $configuration;
