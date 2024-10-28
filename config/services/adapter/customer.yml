@@ -1,0 +1,6 @@
+services:
+    # Form services
+    drsoft_fr.module.validate_customer_pro.data.validator.adapter_customer_validator:
+        class: DrSoftFr\Module\ValidateCustomerPro\Data\Validator\AdapterCustomerValidator
+        arguments:
+            - '@drsoft_fr.module.validate_customer_pro.adapter.query_handler.customer.get_id_customers_provider'
