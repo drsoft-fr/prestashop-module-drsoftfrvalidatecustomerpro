@@ -1,9 +1,43 @@
 services:
     # Form services
+    drsoft_fr.module.validate_customer_pro.form.identifiable_object.data_provider.adapter_customer_form_data_provider:
+        class: DrSoftFr\Module\ValidateCustomerPro\Form\IdentifiableObject\DataProvider\AdapterCustomerFormDataProvider
+        arguments:
+            - '@doctrine.orm.default_entity_manager'
+
+    drsoft_fr.module.validate_customer_pro.form.identifiable_object.builder.adapter_customer_form_builder:
+        class: PrestaShop\PrestaShop\Core\Form\IdentifiableObject\Builder\FormBuilder
+        factory: 'prestashop.core.form.builder.form_builder_factory:create'
+        arguments:
+            - DrSoftFr\Module\ValidateCustomerPro\Form\AdapterCustomerType
+            - '@drsoft_fr.module.validate_customer_pro.form.identifiable_object.data_provider.adapter_customer_form_data_provider'
+        public: true
+
     drsoft_fr.module.validate_customer_pro.data.validator.adapter_customer_validator:
         class: DrSoftFr\Module\ValidateCustomerPro\Data\Validator\AdapterCustomerValidator
         arguments:
             - '@drsoft_fr.module.validate_customer_pro.adapter.query_handler.customer.get_id_customers_provider'
+
+    drsoft_fr.module.validate_customer_pro.form.identifiable_object.data_handler.adapter_customer_form_data_handler:
+        class: DrSoftFr\Module\ValidateCustomerPro\Form\IdentifiableObject\DataHandler\AdapterCustomerFormDataHandler
+        arguments:
+            - '@drsoft_fr.module.validate_customer_pro.repository.adapter_customer_repository'
+            - '@doctrine.orm.default_entity_manager'
+            - '@drsoft_fr.module.validate_customer_pro.data.validator.adapter_customer_validator'
+
+    drsoft_fr.module.validate_customer_pro.form.identifiable_object.handler.adapter_customer_form_handler:
+        class: PrestaShop\PrestaShop\Core\Form\IdentifiableObject\Handler\FormHandler
+        factory: 'prestashop.core.form.identifiable_object.handler.form_handler_factory:create'
+        arguments:
+            - '@drsoft_fr.module.validate_customer_pro.form.identifiable_object.data_handler.adapter_customer_form_data_handler'
+        public: true
+
+    # AdapterCustomer form
+    drsoft_fr.module.validate_customer_pro.form.adapter_customer_type:
+        class: DrSoftFr\Module\ValidateCustomerPro\Form\AdapterCustomerType
+        parent: 'form.type.translatable.aware'
+        tags:
+            - { name: form.type }
 
     # Grid services
     drsoft_fr.module.validate_customer_pro.grid.definition.factory.adapter_customers:
