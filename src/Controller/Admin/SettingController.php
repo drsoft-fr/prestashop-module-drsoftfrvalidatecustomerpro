@@ -22,7 +22,9 @@ use Throwable;
  */
 final class SettingController extends FrameworkBundleAdminController
 {
+    const PAGE_INDEX_ROUTE = 'admin_drsoft_fr_validate_customer_pro_setting_index';
     const TAB_CLASS_NAME = 'AdminDrSoftFrValidateCustomerProSetting';
+    const TEMPLATE_FOLDER = '@Modules/drsoftfrvalidatecustomerpro/views/templates/admin/setting/';
 
     /**
      * Renders the index page of the drSoft.fr ValidateCustomerPro settings.
@@ -43,9 +45,9 @@ final class SettingController extends FrameworkBundleAdminController
             ->getValidateCustomerProFormHandler()
             ->getForm();
 
-        return $this->render('@Modules/drsoftfrvalidatecustomerpro/views/templates/admin/setting/index.html.twig', [
+        return $this->render(self::TEMPLATE_FOLDER . 'index.html.twig', [
             'enableSidebar' => true,
-            'form' => $form->createView(),
+            'drsoft_fr_validate_customer_pro_setting_form' => $form->createView(),
             'help_link' => $this->generateSidebarLink($request->attributes->get('_legacy_controller')),
             'module' => $this->getModule(),
         ]);
@@ -90,7 +92,7 @@ final class SettingController extends FrameworkBundleAdminController
             );
         }
 
-        return $this->redirectToRoute('admin_drsoft_fr_validate_customer_pro_setting_index');
+        return $this->redirectToRoute(self::PAGE_INDEX_ROUTE);
     }
 
     /**
@@ -115,7 +117,7 @@ final class SettingController extends FrameworkBundleAdminController
             $form->handleRequest($request);
 
             if (!$form->isSubmitted()) {
-                return $this->redirectToRoute('admin_drsoft_fr_validate_customer_pro_setting_index');
+                return $this->redirectToRoute(self::PAGE_INDEX_ROUTE);
             }
 
             if (!$form->isValid()) {
@@ -127,7 +129,7 @@ final class SettingController extends FrameworkBundleAdminController
                     )
                 );
 
-                return $this->redirectToRoute('admin_drsoft_fr_validate_customer_pro_setting_index');
+                return $this->redirectToRoute(self::PAGE_INDEX_ROUTE);
             }
 
             $errors = $handler->save($form->getData());
@@ -158,7 +160,7 @@ final class SettingController extends FrameworkBundleAdminController
             );
         }
 
-        return $this->redirectToRoute('admin_drsoft_fr_validate_customer_pro_setting_index');
+        return $this->redirectToRoute(self::PAGE_INDEX_ROUTE);
     }
 
     /**

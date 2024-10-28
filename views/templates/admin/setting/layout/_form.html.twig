@@ -1,13 +1,13 @@
 {% import '@PrestaShop/Admin/macros.html.twig' as ps %}
 
-{% block validate_customer_pro_form %}
-    {{ form_start(form) }}
+{% block drsoft_fr_validate_customer_pro_setting_form %}
+    {{ form_start(drsoft_fr_validate_customer_pro_setting_form) }}
     <div class="card">
         <h3 class="card-header">
             <i class="material-icons">settings</i> {{ 'drSoft.fr Validate customer pro'|trans }}
         </h3>
         <div class="form-wrapper">
-            {{ form_errors(form) }}
+            {{ form_errors(drsoft_fr_validate_customer_pro_setting_form) }}
             <div class="align-lg-items-start d-lg-flex">
                 <div aria-orientation="vertical"
                      class="border-0 flex-column flex-shrink-0 nav nav-pills"
@@ -74,7 +74,7 @@
                         {{ 'Alert'|trans }}
                     </button>
                 </div>
-                {% block validate_customer_pro_form_rest %}
+                {% block drsoft_fr_validate_customer_pro_setting_form_rest %}
                     <div class="flex-grow-1 tab-content" id="v-pills-settings-tab-content">
                         <div aria-labelledby="v-pills-setting-1-tab"
                              class="tab-pane fade show active"
@@ -87,8 +87,8 @@
                                         <h2 class="card-header">{{ 'Main'|trans }}</h2>
                                     </legend>
                                     <div class="card-body">
-                                        {{ form_row(form.active) }}
-                                        {{ form_row(form.enable_manual_validation_account) }}
+                                        {{ form_row(drsoft_fr_validate_customer_pro_setting_form.active) }}
+                                        {{ form_row(drsoft_fr_validate_customer_pro_setting_form.enable_manual_validation_account) }}
                                     </div>
                                 </fieldset>
                             </div>
@@ -104,10 +104,10 @@
                                         <h2 class="card-header">{{ 'Email'|trans }}</h2>
                                     </legend>
                                     <div class="card-body">
-                                        {{ form_row(form.admin_action_customer_account_add_email) }}
-                                        {{ form_row(form.admin_send_email_on_action_customer_account_add_hook) }}
-                                        {{ form_row(form.enable_email_approval) }}
-                                        {{ form_row(form.enable_email_pending_approval) }}
+                                        {{ form_row(drsoft_fr_validate_customer_pro_setting_form.admin_action_customer_account_add_email) }}
+                                        {{ form_row(drsoft_fr_validate_customer_pro_setting_form.admin_send_email_on_action_customer_account_add_hook) }}
+                                        {{ form_row(drsoft_fr_validate_customer_pro_setting_form.enable_email_approval) }}
+                                        {{ form_row(drsoft_fr_validate_customer_pro_setting_form.enable_email_pending_approval) }}
                                     </div>
                                 </fieldset>
                             </div>
@@ -123,8 +123,8 @@
                                         <h2 class="card-header">{{ 'CMS'|trans }}</h2>
                                     </legend>
                                     <div class="card-body">
-                                        {{ form_row(form.cms_notify_id) }}
-                                        {{ form_row(form.cms_not_activated_id) }}
+                                        {{ form_row(drsoft_fr_validate_customer_pro_setting_form.cms_notify_id) }}
+                                        {{ form_row(drsoft_fr_validate_customer_pro_setting_form.cms_not_activated_id) }}
                                     </div>
                                 </fieldset>
                             </div>
@@ -140,8 +140,8 @@
                                         <h2 class="card-header">{{ 'Customer group'|trans }}</h2>
                                     </legend>
                                     <div class="card-body">
-                                        {{ form_row(form.customer_group_id) }}
-                                        {{ form_row(form.enable_auto_customer_group_selection) }}
+                                        {{ form_row(drsoft_fr_validate_customer_pro_setting_form.customer_group_id) }}
+                                        {{ form_row(drsoft_fr_validate_customer_pro_setting_form.enable_auto_customer_group_selection) }}
                                     </div>
                                 </fieldset>
                             </div>
@@ -157,8 +157,8 @@
                                         <h2 class="card-header">{{ 'Form'|trans }}</h2>
                                     </legend>
                                     <div class="card-body">
-                                        {{ form_row(form.require_company_field) }}
-                                        {{ form_row(form.require_siret_field) }}
+                                        {{ form_row(drsoft_fr_validate_customer_pro_setting_form.require_company_field) }}
+                                        {{ form_row(drsoft_fr_validate_customer_pro_setting_form.require_siret_field) }}
                                     </div>
                                 </fieldset>
                             </div>
@@ -174,8 +174,8 @@
                                         <h2 class="card-header">{{ 'Alert'|trans }}</h2>
                                     </legend>
                                     <div class="card-body">
-                                        {{ form_row(form.enable_unauthenticated_customer_alert) }}
-                                        {{ form_row(form.enable_unapproved_customer_alert) }}
+                                        {{ form_row(drsoft_fr_validate_customer_pro_setting_form.enable_unauthenticated_customer_alert) }}
+                                        {{ form_row(drsoft_fr_validate_customer_pro_setting_form.enable_unapproved_customer_alert) }}
                                     </div>
                                 </fieldset>
                             </div>
@@ -194,5 +194,5 @@
             </button>
         </div>
     </div>
-    {{ form_end(form) }}
+    {{ form_end(drsoft_fr_validate_customer_pro_setting_form) }}
 {% endblock %}
