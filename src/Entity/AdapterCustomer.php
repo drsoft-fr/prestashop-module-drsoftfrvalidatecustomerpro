@@ -65,7 +65,7 @@ class AdapterCustomer
             'id' => $this->getId(),
             'id_adapter_customer' => $this->getId(),
             'id_customer' => $this->getIdCustomer(),
-            'active' => $this->getActive(),
+            'active' => $this->isActive(),
             'date_add' => $this->getDateAdd(),
             'date_upd' => $this->getDateUpd(),
         ];
