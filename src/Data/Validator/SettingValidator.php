@@ -16,12 +16,12 @@ final class SettingValidator extends AbstractValidator implements ValidatorInter
     /**
      * @var array
      */
-    private array $cmsIds;
+    private $cmsIds;
 
     /**
      * @var array
      */
-    private array $groupIds;
+    private $groupIds;
 
     public function __construct(
         array $cmsIds,
