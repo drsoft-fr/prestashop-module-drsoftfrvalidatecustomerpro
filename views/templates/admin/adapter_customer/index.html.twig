@@ -1,0 +1,17 @@
+{% extends '@Modules/drsoftfrvalidatecustomerpro/views/templates/admin/base.html.twig' %}
+
+{% block main %}
+    {% block drsoft_fr_validate_customer_pro_adapter_customer_list_panel %}
+        <div class="row">
+            <div class="col">
+                {% include '@PrestaShop/Admin/Common/Grid/grid_panel.html.twig' with {'grid': drsoft_fr_validate_customer_pro_adapter_customer_grid} %}
+            </div>
+        </div>
+    {% endblock %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script src="{{ asset('themes/default/js/bundle/pagination.js') }}"></script>
+{% endblock %}
