@@ -60,14 +60,14 @@ class SettingConstraintException extends SettingException
     public const INVALID_ENABLE_MANUAL_VALIDATION_ACCOUNT = 100;
 
     /**
-     * When require_company_field field is invalid
+     * When required_form_fields field is invalid
      */
-    public const INVALID_REQUIRE_COMPANY_FIELD = 110;
+    public const INVALID_REQUIRED_FORM_FIELDS = 110;
 
     /**
-     * When require_siret_field field is invalid
+     * When additional_form_fields field is invalid
      */
-    public const INVALID_REQUIRE_SIRET_FIELD = 120;
+    public const INVALID_ADDITIONAL_FORM_FIELDS = 120;
 
     /**
      * When enable_unauthenticated_customer_alert field is invalid
@@ -78,4 +78,9 @@ class SettingConstraintException extends SettingException
      * When enable_unapproved_customer_alert field is invalid
      */
     public const INVALID_ENABLE_UNAPPROVED_CUSTOMER_ALERT = 140;
+
+    /**
+     * When consistency form fields are invalid
+     */
+    public const INVALID_CONSISTENCY_FORM_FIELDS = 150;
 }

@@ -29,8 +29,8 @@ final class SettingConfiguration implements DataConfigurationInterface
         'enable_email_approval' => 'DRSOFT_FR_VALIDATE_CUSTOMER_PRO_ENABLE_EMAIL_APPROVAL',
         'enable_email_pending_approval' => 'DRSOFT_FR_VALIDATE_CUSTOMER_PRO_ENABLE_EMAIL_PENDING_APPROVAL',
         'enable_manual_validation_account' => 'DRSOFT_FR_VALIDATE_CUSTOMER_PRO_ENABLE_MANUAL_VALIDATION_ACCOUNT',
-        'require_company_field' => 'DRSOFT_FR_VALIDATE_CUSTOMER_PRO_REQUIRE_COMPANY_FIELD',
-        'require_siret_field' => 'DRSOFT_FR_VALIDATE_CUSTOMER_PRO_REQUIRE_SIRET_FIELD',
+        'required_form_fields' => 'DRSOFT_FR_VALIDATE_CUSTOMER_PRO_REQUIRED_FORM_FIELDS',
+        'additional_form_fields' => 'DRSOFT_FR_VALIDATE_CUSTOMER_PRO_ADDITIONAL_FORM_FIELDS',
         'enable_unauthenticated_customer_alert' => 'DRSOFT_FR_VALIDATE_CUSTOMER_PRO_ENABLE_UNAUTHENTICATED_CUSTOMER_ALERT',
         'enable_unapproved_customer_alert' => 'DRSOFT_FR_VALIDATE_CUSTOMER_PRO_ENABLE_UNAPPROVED_CUSTOMER_ALERT',
     ];
@@ -46,8 +46,8 @@ final class SettingConfiguration implements DataConfigurationInterface
         'enable_email_approval' => false,
         'enable_email_pending_approval' => false,
         'enable_manual_validation_account' => false,
-        'require_company_field' => false,
-        'require_siret_field' => false,
+        'required_form_fields' => [],
+        'additional_form_fields' => [],
         'enable_unauthenticated_customer_alert' => false,
         'enable_unapproved_customer_alert' => false,
     ];
@@ -67,7 +67,7 @@ final class SettingConfiguration implements DataConfigurationInterface
      * @param SettingValidator|null $validator
      */
     public function __construct(
-        Configuration                $configuration,
+        Configuration    $configuration,
         SettingValidator $validator = null
     )
     {
@@ -92,8 +92,6 @@ final class SettingConfiguration implements DataConfigurationInterface
                     'enable_email_approval',
                     'enable_email_pending_approval',
                     'enable_manual_validation_account',
-                    'require_company_field',
-                    'require_siret_field',
                     'enable_unauthenticated_customer_alert',
                     'enable_unapproved_customer_alert',
                 ],
@@ -119,6 +117,14 @@ final class SettingConfiguration implements DataConfigurationInterface
             }
 
             $configuration[$key] = $this->configuration->get($value, self::CONFIGURATION_DEFAULT_VALUES[$key]);
+        }
+
+        if (is_string($configuration['required_form_fields'])) {
+            $configuration['required_form_fields'] = explode(',', $configuration['required_form_fields']);
+        }
+
+        if (is_string($configuration['additional_form_fields'])) {
+            $configuration['additional_form_fields'] = explode(',', $configuration['additional_form_fields']);
         }
 
         return $configuration;
@@ -151,6 +157,18 @@ final class SettingConfiguration implements DataConfigurationInterface
             $this->validateConfiguration($configuration);
 
             foreach (self::CONFIGURATION_KEYS as $key => $value) {
+                if (in_array(
+                    $key,
+                    [
+                        'required_form_fields',
+                        'additional_form_fields'
+                    ]
+                )) {
+                    $this->configuration->set($value, implode(',', $configuration[$key]));
+
+                    continue;
+                }
+
                 $this->configuration->set($value, $configuration[$key]);
             }
         } catch (Throwable $t) {

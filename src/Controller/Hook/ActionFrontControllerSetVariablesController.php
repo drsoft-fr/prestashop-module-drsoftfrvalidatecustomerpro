@@ -49,14 +49,14 @@ final class ActionFrontControllerSetVariablesController extends AbstractHookCont
         }
 
         if (
-            true === $this->settings['require_company_field'] &&
+            in_array('customer__company', $this->settings['required_form_fields'], true) &&
             empty($this->getContext()->customer->company)
         ) {
             return false;
         }
 
         if (
-            true === $this->settings['require_siret_field'] &&
+            in_array('customer__siret', $this->settings['required_form_fields'], true) &&
             empty($this->getContext()->customer->siret)
         ) {
             return false;

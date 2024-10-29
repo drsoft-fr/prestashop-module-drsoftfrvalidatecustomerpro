@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace DrSoftFr\Module\ValidateCustomerPro\Data\Validator;
 
+use DrSoftFr\Module\ValidateCustomerPro\Data\Provider\AdditionalFormFieldsProvider;
+use DrSoftFr\Module\ValidateCustomerPro\Data\Provider\RequiredFormFieldsProvider;
 use DrSoftFr\Module\ValidateCustomerPro\Exception\CmsPage\NonexistentCmsPageIdException;
 use DrSoftFr\Module\ValidateCustomerPro\Exception\Group\NonexistentGroupIdException;
 use Exception;
@@ -14,6 +16,11 @@ use DrSoftFr\PrestaShopModuleHelper\Data\Validator\ValidatorInterface;
 final class SettingValidator extends AbstractValidator implements ValidatorInterface
 {
     /**
+     * @var AdditionalFormFieldsProvider
+     */
+    private $additionalFormFieldsProvider;
+
+    /**
      * @var array
      */
     private $cmsIds;
@@ -23,13 +30,22 @@ final class SettingValidator extends AbstractValidator implements ValidatorInter
      */
     private $groupIds;
 
+    /**
+     * @var RequiredFormFieldsProvider
+     */
+    private $requiredFormFieldsProvider;
+
     public function __construct(
-        array $cmsIds,
-        array $groupIds
+        AdditionalFormFieldsProvider $additionalFormFieldsProvider,
+        array                        $cmsIds,
+        array                        $groupIds,
+        RequiredFormFieldsProvider   $requiredFormFieldsProvider
     )
     {
+        $this->additionalFormFieldsProvider = $additionalFormFieldsProvider;
         $this->cmsIds = $cmsIds;
         $this->groupIds = $groupIds;
+        $this->requiredFormFieldsProvider = $requiredFormFieldsProvider;
     }
 
 
@@ -55,8 +71,9 @@ final class SettingValidator extends AbstractValidator implements ValidatorInter
             ->validateEnableEmailApproval($data)
             ->validateEnableEmailPendingApproval($data)
             ->validateEnableManualValidationAccount($data)
-            ->validateRequireCompanyField($data)
-            ->validateRequireSiretField($data)
+            ->validateAdditionalFormFields($data)
+            ->validateRequiredFormFields($data)
+            ->validateConsistencyFormFields($data)
             ->validateEnableUnauthenticatedCustomerAlert($data)
             ->validateEnableUnapprovedCustomerAlert($data);
 
@@ -322,41 +339,99 @@ final class SettingValidator extends AbstractValidator implements ValidatorInter
     }
 
     /**
-     * Validates the require_company_field field in the configuration array.
-     * Ensures that the field is set and is a boolean value.
+     * Validates the additional_form_fields field in the configuration array.
+     *  Ensures that the field is set and is an array.
      *
      * @param array $configuration The configuration array to validate.
      *
-     * @return SettingValidator
+     * @return SettingValidator The instance of the SettingValidator.
      *
-     * @throws SettingConstraintException If the require_company_field field is not set.
-     * @throws SettingConstraintException If the require_company_field field is not a boolean value.
+     * @throws SettingConstraintException If the additional_form_fields field is not set.
+     * @throws SettingConstraintException If the additional_form_fields field is not an array.
      * @throws Exception
      */
-    private function validateRequireCompanyField(array $configuration): SettingValidator
+    private function validateAdditionalFormFields(array $configuration): SettingValidator
     {
-        $this->isSet($configuration, 'require_company_field', new SettingConstraintException);
-        $this->isBool($configuration, 'require_company_field', new SettingConstraintException);
+        $this->isSet($configuration, 'additional_form_fields', new SettingConstraintException);
+        $this->isArray($configuration, 'additional_form_fields', new SettingConstraintException);
+
+        $names = $this->additionalFormFieldsProvider->getNames();
+
+        foreach ($configuration['additional_form_fields'] as $field) {
+            if (!in_array(
+                $field,
+                $names,
+                true
+            )) {
+                throw new SettingConstraintException(
+                    'invalid additional_form_fields field',
+                    SettingConstraintException::INVALID_ADDITIONAL_FORM_FIELDS
+                );
+            }
+        }
+        unset($field);
+        unset($names);
 
         return $this;
     }
 
     /**
-     * Validates the require_siret_field field in the configuration array.
-     * Ensures that the field is set and is a boolean value.
+     * Validates the required_form_fields field in the configuration array.
+     *  Ensures that the field is set and is an array.
      *
      * @param array $configuration The configuration array to validate.
      *
-     * @return SettingValidator
+     * @return SettingValidator The instance of the SettingValidator.
      *
-     * @throws SettingConstraintException If the require_siret_field field is not set.
-     * @throws SettingConstraintException If the require_siret_field field is not a boolean value.
+     * @throws SettingConstraintException If the required_form_fields field is not set.
+     * @throws SettingConstraintException If the required_form_fields field is not an array.
      * @throws Exception
      */
-    private function validateRequireSiretField(array $configuration): SettingValidator
+    private function validateRequiredFormFields(array $configuration): SettingValidator
     {
-        $this->isSet($configuration, 'require_siret_field', new SettingConstraintException);
-        $this->isBool($configuration, 'require_siret_field', new SettingConstraintException);
+        $this->isSet($configuration, 'required_form_fields', new SettingConstraintException);
+        $this->isArray($configuration, 'required_form_fields', new SettingConstraintException);
+
+        $names = $this->requiredFormFieldsProvider->getNames();
+
+        foreach ($configuration['required_form_fields'] as $field) {
+            if (!in_array(
+                $field,
+                $names,
+                true
+            )) {
+                throw new SettingConstraintException(
+                    'invalid required_form_fields field',
+                    SettingConstraintException::INVALID_REQUIRED_FORM_FIELDS
+                );
+            }
+        }
+        unset($field);
+        unset($names);
+
+        return $this;
+    }
+
+    private function validateConsistencyFormFields(array $configuration): SettingValidator
+    {
+        $additionalFormNames = $configuration['additional_form_fields'];
+        $requiredFormNames = $configuration['required_form_fields'];
+
+        unset($requiredFormNames[array_search('customer__company', $requiredFormNames)]);
+        unset($requiredFormNames[array_search('customer__siret', $requiredFormNames)]);
+
+        foreach ($requiredFormNames as $name) {
+            if (!in_array(
+                $name,
+                $additionalFormNames,
+                true
+            )) {
+                throw new SettingConstraintException(
+                    'required_form_fields (' . $name . ') field must be in additional_form_fields',
+                    SettingConstraintException::INVALID_CONSISTENCY_FORM_FIELDS
+                );
+            }
+        }
 
         return $this;
     }

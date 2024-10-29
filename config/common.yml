@@ -1,3 +1,26 @@
 imports:
     - { resource: services/common/adapter.yml }
     - { resource: services/common/setting.yml }
+
+services:
+    # Data provider
+    drsoft_fr.module.validate_customer_pro.data.provider.additional_form_fields_provider:
+        class: DrSoftFr\Module\ValidateCustomerPro\Data\Provider\AdditionalFormFieldsProvider
+        arguments:
+            - '@translator'
+
+    drsoft_fr.module.validate_customer_pro.data.additional_form_fields_data_provider:
+        class: DrSoftFr\Module\ValidateCustomerPro\Data\Provider\AdditionalFormFieldsProvider
+        factory: 'drsoft_fr.module.validate_customer_pro.data.provider.additional_form_fields_provider:getData'
+        public: true
+
+    drsoft_fr.module.validate_customer_pro.data.provider.required_form_fields_provider:
+        class: DrSoftFr\Module\ValidateCustomerPro\Data\Provider\RequiredFormFieldsProvider
+        arguments:
+            - '@drsoft_fr.module.validate_customer_pro.data.additional_form_fields_data_provider'
+            - '@translator'
+
+    drsoft_fr.module.validate_customer_pro.data.required_form_fields_data_provider:
+        class: DrSoftFr\Module\ValidateCustomerPro\Data\Provider\RequiredFormFieldsProvider
+        factory: 'drsoft_fr.module.validate_customer_pro.data.provider.required_form_fields_provider:getData'
+        public: true

@@ -3,8 +3,10 @@ services:
     drsoft_fr.module.validate_customer_pro.data.validator.setting_validator:
         class: DrSoftFr\Module\ValidateCustomerPro\Data\Validator\SettingValidator
         arguments:
+            - '@drsoft_fr.module.validate_customer_pro.data.provider.additional_form_fields_provider'
             - '@drsoft_fr.module.validate_customer_pro.adapter.query_handler.cms_page.get_id_cms_pages_provider'
             - '@drsoft_fr.module.validate_customer_pro.adapter.query_handler.group.get_id_groups_provider'
+            - '@drsoft_fr.module.validate_customer_pro.data.provider.required_form_fields_provider'
 
     # Data factory
     drsoft_fr.module.validate_customer_pro.data.factory.setting_data_factory:

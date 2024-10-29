@@ -26,6 +26,11 @@ final class SettingType extends TranslatorAwareType
     /**
      * @var array
      */
+    private $additionalFormFieldChoices;
+
+    /**
+     * @var array
+     */
     private $cmsPageChoices;
 
     /**
@@ -33,17 +38,26 @@ final class SettingType extends TranslatorAwareType
      */
     private $groupChoices;
 
+    /**
+     * @var array
+     */
+    private $requiredFormFieldChoices;
+
     public function __construct(
         TranslatorInterface $translator,
         array               $locales,
+        array               $additionalFormFieldChoices,
         array               $cmsPageChoices,
-        array               $groupChoices
+        array               $groupChoices,
+        array               $requiredFormFieldChoices
     )
     {
         parent::__construct($translator, $locales);
 
+        $this->additionalFormFieldChoices = $additionalFormFieldChoices;
         $this->cmsPageChoices = $cmsPageChoices;
         $this->groupChoices = $groupChoices;
+        $this->requiredFormFieldChoices = $requiredFormFieldChoices;
     }
 
     /**
@@ -185,28 +199,36 @@ final class SettingType extends TranslatorAwareType
                 ),
                 'required' => true,
             ])
-            ->add('require_company_field', SwitchType::class, [
-                'empty_data' => false,
+            ->add('required_form_fields', ChoiceType::class, [
+                'choices' => $this->requiredFormFieldChoices,
+                'choice_translation_domain' => false,
+                'empty_data' => [],
+                'expanded' => true,
                 'help' => $this->trans(
-                    'Do you want to make the “company name” field mandatory on the account creation page?',
+                    'Select the fields that will be required on the account creation form. ',
                     'Modules.Drsoftfrvalidatecustomerpro.Admin'
                 ),
                 'label' => $this->trans(
-                    'Require company field',
+                    'Required form fields',
                     'Modules.Drsoftfrvalidatecustomerpro.Admin'
                 ),
+                'multiple' => true,
                 'required' => true,
             ])
-            ->add('require_siret_field', SwitchType::class, [
-                'empty_data' => false,
+            ->add('additional_form_fields', ChoiceType::class, [
+                'choices' => $this->additionalFormFieldChoices,
+                'choice_translation_domain' => false,
+                'empty_data' => [],
+                'expanded' => true,
                 'help' => $this->trans(
-                    'Do you want to make the SIRET field mandatory on the account creation page?',
+                    'Select the additional fields to be displayed on the account creation form. ',
                     'Modules.Drsoftfrvalidatecustomerpro.Admin'
                 ),
                 'label' => $this->trans(
-                    'Require siret field',
+                    'Additional form fields',
                     'Modules.Drsoftfrvalidatecustomerpro.Admin'
                 ),
+                'multiple' => true,
                 'required' => true,
             ])
             ->add('enable_unauthenticated_customer_alert', SwitchType::class, [
