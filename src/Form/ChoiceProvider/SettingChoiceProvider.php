@@ -14,7 +14,7 @@ final class SettingChoiceProvider
     /**
      * @var array
      */
-    private $additionalFormFields;
+    private $formFields;
 
     /**
      * @var GroupDataProvider
@@ -27,27 +27,20 @@ final class SettingChoiceProvider
     private $language;
 
     /**
-     * @var array
-     */
-    private $requiredFormFields;
-
-    /**
      * @var int
      */
     private $shop;
 
     public function __construct(
-        array             $additionalFormFields,
+        array             $formFields,
         GroupDataProvider $groupDataProvider,
         int               $language,
-        array             $requiredFormFields,
         int               $shop
     )
     {
-        $this->additionalFormFields = $additionalFormFields;
+        $this->formFields = $formFields;
         $this->groupDataProvider = $groupDataProvider;
         $this->language = $language;
-        $this->requiredFormFields = $requiredFormFields;
         $this->shop = $shop;
     }
 
@@ -58,11 +51,11 @@ final class SettingChoiceProvider
      *
      * @return array The array of choices for additional form fields.
      */
-    public function getAdditionalFormFieldChoices(): array
+    public function getFormFieldChoices(): array
     {
         $choices = [];
 
-        foreach ($this->additionalFormFields as $field) {
+        foreach ($this->formFields as $field) {
             if (
                 empty($field['domain']) ||
                 empty($field['label']) ||
@@ -113,31 +106,5 @@ final class SettingChoiceProvider
                 $this->language,
                 $this->shop
             );
-    }
-
-    /**
-     * Returns an array of choices for required form fields.
-     *
-     * Iterates through the required form fields and creates choices only if domain, name, and label are not empty.
-     *
-     * @return array The array of choices for required form fields.
-     */
-    public function getRequiredFormFieldChoices(): array
-    {
-        $choices = [];
-
-        foreach ($this->requiredFormFields as $field) {
-            if (
-                empty($field['domain']) ||
-                empty($field['label']) ||
-                empty($field['name'])
-            ) {
-                continue;
-            }
-
-            $choices[$field['label'] . ' (' . $field['domain'] . ')'] = $field['name'];
-        }
-
-        return $choices;
     }
 }

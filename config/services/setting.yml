@@ -8,10 +8,9 @@ services:
     drsoft_fr.module.validate_customer_pro.form.choice_provider.setting_choice_provider:
         class: DrSoftFr\Module\ValidateCustomerPro\Form\ChoiceProvider\SettingChoiceProvider
         arguments:
-            - '@drsoft_fr.module.validate_customer_pro.data.additional_form_fields_data_provider'
+            - '@drsoft_fr.module.validate_customer_pro.data.form_fields_data_provider'
             - '@prestashop.adapter.data_provider.group'
             - '@=service("prestashop.adapter.legacy.context").getLanguage().id'
-            - '@drsoft_fr.module.validate_customer_pro.data.required_form_fields_data_provider'
             - '@=service("prestashop.adapter.legacy.context").getContext().shop.id'
 
     drsoft_fr.module.validate_customer_pro.form.handler.setting_form_handler:
@@ -29,9 +28,8 @@ services:
         class: DrSoftFr\Module\ValidateCustomerPro\Form\SettingType
         parent: 'form.type.translatable.aware'
         arguments:
-            - '@=service("drsoft_fr.module.validate_customer_pro.form.choice_provider.setting_choice_provider").getAdditionalFormFieldChoices()'
             - '@=service("prestashop.adapter.data_provider.cms").getCmsChoices()'
+            - '@=service("drsoft_fr.module.validate_customer_pro.form.choice_provider.setting_choice_provider").getFormFieldChoices()'
             - '@=service("drsoft_fr.module.validate_customer_pro.form.choice_provider.setting_choice_provider").getGroupChoices()'
-            - '@=service("drsoft_fr.module.validate_customer_pro.form.choice_provider.setting_choice_provider").getRequiredFormFieldChoices()'
         tags:
             - { name: form.type }

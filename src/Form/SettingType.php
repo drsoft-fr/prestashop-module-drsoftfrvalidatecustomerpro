@@ -26,38 +26,31 @@ final class SettingType extends TranslatorAwareType
     /**
      * @var array
      */
-    private $additionalFormFieldChoices;
+    private $cmsPageChoices;
 
     /**
      * @var array
      */
-    private $cmsPageChoices;
+    private $formFieldChoices;
 
     /**
      * @var array
      */
     private $groupChoices;
 
-    /**
-     * @var array
-     */
-    private $requiredFormFieldChoices;
-
     public function __construct(
         TranslatorInterface $translator,
         array               $locales,
-        array               $additionalFormFieldChoices,
         array               $cmsPageChoices,
-        array               $groupChoices,
-        array               $requiredFormFieldChoices
+        array               $formFieldChoices,
+        array               $groupChoices
     )
     {
         parent::__construct($translator, $locales);
 
-        $this->additionalFormFieldChoices = $additionalFormFieldChoices;
         $this->cmsPageChoices = $cmsPageChoices;
+        $this->formFieldChoices = $formFieldChoices;
         $this->groupChoices = $groupChoices;
-        $this->requiredFormFieldChoices = $requiredFormFieldChoices;
     }
 
     /**
@@ -200,7 +193,7 @@ final class SettingType extends TranslatorAwareType
                 'required' => true,
             ])
             ->add('required_form_fields', ChoiceType::class, [
-                'choices' => $this->requiredFormFieldChoices,
+                'choices' => $this->formFieldChoices,
                 'choice_translation_domain' => false,
                 'empty_data' => [],
                 'expanded' => true,
@@ -216,7 +209,7 @@ final class SettingType extends TranslatorAwareType
                 'required' => true,
             ])
             ->add('additional_form_fields', ChoiceType::class, [
-                'choices' => $this->additionalFormFieldChoices,
+                'choices' => $this->formFieldChoices,
                 'choice_translation_domain' => false,
                 'empty_data' => [],
                 'expanded' => true,

@@ -6,7 +6,7 @@ namespace DrSoftFr\Module\ValidateCustomerPro\Data\Provider;
 
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-final class AdditionalFormFieldsProvider
+final class FormFieldsProvider
 {
     /**
      * @var TranslatorInterface
@@ -33,6 +33,18 @@ final class AdditionalFormFieldsProvider
         return [
             [
                 'domain' => 'customer',
+                'field' => 'company',
+                'label' => $this->translator->trans('Company', [], 'Shop.Forms.Labels'),
+                'name' => 'customer__company'
+            ],
+            [
+                'domain' => 'customer',
+                'field' => 'siret',
+                'label' => $this->translator->trans('Siret', [], 'Modules.Drsoftfrvalidatecustomerpro.Shop'),
+                'name' => 'customer__siret'
+            ],
+            [
+                'domain' => 'customer',
                 'field' => 'ape',
                 'label' => $this->translator->trans('APE', [], 'Modules.Drsoftfrvalidatecustomerpro.Shop'),
                 'name' => 'customer__ape'
@@ -48,12 +60,6 @@ final class AdditionalFormFieldsProvider
                 'field' => 'note',
                 'label' => $this->translator->trans('Note', [], 'Modules.Drsoftfrvalidatecustomerpro.Shop'),
                 'name' => 'customer__note'
-            ],
-            [
-                'domain' => 'address',
-                'field' => 'alias',
-                'label' => $this->translator->trans('Alias', [], 'Shop.Forms.Labels'),
-                'name' => 'address__alias'
             ],
             [
                 'domain' => 'address',

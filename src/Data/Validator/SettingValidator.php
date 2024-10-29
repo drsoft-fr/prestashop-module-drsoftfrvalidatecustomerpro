@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace DrSoftFr\Module\ValidateCustomerPro\Data\Validator;
 
-use DrSoftFr\Module\ValidateCustomerPro\Data\Provider\AdditionalFormFieldsProvider;
-use DrSoftFr\Module\ValidateCustomerPro\Data\Provider\RequiredFormFieldsProvider;
+use DrSoftFr\Module\ValidateCustomerPro\Data\Provider\FormFieldsProvider;
 use DrSoftFr\Module\ValidateCustomerPro\Exception\CmsPage\NonexistentCmsPageIdException;
 use DrSoftFr\Module\ValidateCustomerPro\Exception\Group\NonexistentGroupIdException;
 use Exception;
@@ -16,36 +15,29 @@ use DrSoftFr\PrestaShopModuleHelper\Data\Validator\ValidatorInterface;
 final class SettingValidator extends AbstractValidator implements ValidatorInterface
 {
     /**
-     * @var AdditionalFormFieldsProvider
-     */
-    private $additionalFormFieldsProvider;
-
-    /**
      * @var array
      */
     private $cmsIds;
+
+    /**
+     * @var FormFieldsProvider
+     */
+    private $formFieldsProvider;
 
     /**
      * @var array
      */
     private $groupIds;
 
-    /**
-     * @var RequiredFormFieldsProvider
-     */
-    private $requiredFormFieldsProvider;
-
     public function __construct(
-        AdditionalFormFieldsProvider $additionalFormFieldsProvider,
-        array                        $cmsIds,
-        array                        $groupIds,
-        RequiredFormFieldsProvider   $requiredFormFieldsProvider
+        array              $cmsIds,
+        FormFieldsProvider $formFieldsProvider,
+        array              $groupIds
     )
     {
-        $this->additionalFormFieldsProvider = $additionalFormFieldsProvider;
         $this->cmsIds = $cmsIds;
+        $this->formFieldsProvider = $formFieldsProvider;
         $this->groupIds = $groupIds;
-        $this->requiredFormFieldsProvider = $requiredFormFieldsProvider;
     }
 
 
@@ -355,7 +347,7 @@ final class SettingValidator extends AbstractValidator implements ValidatorInter
         $this->isSet($configuration, 'additional_form_fields', new SettingConstraintException);
         $this->isArray($configuration, 'additional_form_fields', new SettingConstraintException);
 
-        $names = $this->additionalFormFieldsProvider->getNames();
+        $names = $this->formFieldsProvider->getNames();
 
         foreach ($configuration['additional_form_fields'] as $field) {
             if (!in_array(
@@ -392,7 +384,7 @@ final class SettingValidator extends AbstractValidator implements ValidatorInter
         $this->isSet($configuration, 'required_form_fields', new SettingConstraintException);
         $this->isArray($configuration, 'required_form_fields', new SettingConstraintException);
 
-        $names = $this->requiredFormFieldsProvider->getNames();
+        $names = $this->formFieldsProvider->getNames();
 
         foreach ($configuration['required_form_fields'] as $field) {
             if (!in_array(
@@ -412,6 +404,18 @@ final class SettingValidator extends AbstractValidator implements ValidatorInter
         return $this;
     }
 
+    /**
+     * Validates the consistency between additional_form_fields and required_form_fields in the configuration array.
+     *
+     * Removes 'customer__company' and 'customer__siret' from the required_form_fields.
+     * Checks if each required_form field is present in additional_form_fields.
+     *
+     * @param array $configuration The configuration array to validate.
+     *
+     * @return SettingValidator
+     *
+     * @throws SettingConstraintException If a required_form field is not present in additional_form_fields.
+     */
     private function validateConsistencyFormFields(array $configuration): SettingValidator
     {
         $additionalFormNames = $configuration['additional_form_fields'];
