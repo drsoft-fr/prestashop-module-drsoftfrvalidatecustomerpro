@@ -24,6 +24,7 @@ final class Installer
         'actionListMailThemes',
         'actionObjectCustomerDeleteAfter',
         'actionObjectUpdateAfter',
+        'displayCustomerAccountForm',
     ];
 
     /**
