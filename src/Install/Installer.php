@@ -64,11 +64,10 @@ final class Installer
             throw new Exception('An error has occurred while executing the installation SQL resources.');
         }
 
-        if (!$this->fixturesInstaller->install()) {
-            throw new Exception('An error occurred during the fixtures installation process.');
-        }
+        $fixturesConfiguration = $this->fixturesInstaller->install();
+        $configuration = array_merge($this->settingConfiguration::CONFIGURATION_DEFAULT_VALUES, $fixturesConfiguration);
 
-        $this->settingConfiguration->initConfiguration();
+        $this->settingConfiguration->updateConfiguration($configuration);
 
         return true;
     }

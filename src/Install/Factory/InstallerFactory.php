@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace DrSoftFr\Module\ValidateCustomerPro\Install\Factory;
 
+use Db;
 use DrSoftFr\Module\ValidateCustomerPro\Data\Configuration\SettingConfiguration;
 use DrSoftFr\Module\ValidateCustomerPro\Install\FixturesInstaller;
 use DrSoftFr\Module\ValidateCustomerPro\Install\Installer;
@@ -22,7 +23,7 @@ final class InstallerFactory
     public static function create(): Installer
     {
         return new Installer(
-            new FixturesInstaller(),
+            new FixturesInstaller(Db::getInstance()),
             new SettingConfiguration(
                 new Configuration()
             ));
