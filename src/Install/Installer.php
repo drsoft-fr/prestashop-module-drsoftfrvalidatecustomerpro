@@ -22,6 +22,7 @@ final class Installer
         'actionCustomerAccountAdd',
         'actionFrontControllerSetVariables',
         'actionListMailThemes',
+        'actionObjectCustomerDeleteAfter',
         'actionObjectUpdateAfter',
     ];
 
