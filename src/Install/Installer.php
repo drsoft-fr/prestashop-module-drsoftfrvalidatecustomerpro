@@ -27,13 +27,21 @@ final class Installer
     ];
 
     /**
+     * @var FixturesInstaller
+     */
+    private $fixturesInstaller;
+
+    /**
      * @var SettingConfiguration
      */
     private $settingConfiguration;
 
     public function __construct(
-        SettingConfiguration $settingConfiguration)
+        FixturesInstaller    $fixturesInstaller,
+        SettingConfiguration $settingConfiguration
+    )
     {
+        $this->fixturesInstaller = $fixturesInstaller;
         $this->settingConfiguration = $settingConfiguration;
     }
 
@@ -54,6 +62,10 @@ final class Installer
 
         if (!$this->executeSqlFromFile($module->getLocalPath() . 'src/Install/Resources/sql/install.sql')) {
             throw new Exception('An error has occurred while executing the installation SQL resources.');
+        }
+
+        if (!$this->fixturesInstaller->install()) {
+            throw new Exception('An error occurred during the fixtures installation process.');
         }
 
         $this->settingConfiguration->initConfiguration();
@@ -95,6 +107,14 @@ final class Installer
     private function registerHooks(Module $module): bool
     {
         return (bool)$module->registerHook(self::HOOKS);
+    }
+
+    /**
+     * @return FixturesInstaller
+     */
+    public function getFixturesInstaller(): FixturesInstaller
+    {
+        return $this->fixturesInstaller;
     }
 
     /**
