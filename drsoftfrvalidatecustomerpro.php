@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use DrSoftFr\Module\ValidateCustomerPro\Config;
+use DrSoftFr\Module\ValidateCustomerPro\Controller\Admin\AdapterCustomerController;
 use DrSoftFr\Module\ValidateCustomerPro\Controller\Admin\IndexController;
 use DrSoftFr\Module\ValidateCustomerPro\Controller\Admin\SettingController;
 use DrSoftFr\Module\ValidateCustomerPro\Controller\Hook\ActionAuthenticationController;
@@ -70,6 +71,12 @@ class drsoftfrvalidatecustomerpro extends Module
                 'parent_class_name' => 'AdminParentCustomer',
                 'route_name' => 'admin_drsoft_fr_validate_customer_pro_index',
                 'visible' => true,
+            ],
+            [
+                'class_name' => AdapterCustomerController::TAB_CLASS_NAME,
+                'name' => 'Customer',
+                'parent_class_name' => IndexController::TAB_CLASS_NAME,
+                'visible' => false,
             ],
             [
                 'class_name' => SettingController::TAB_CLASS_NAME,
