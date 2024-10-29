@@ -60,7 +60,7 @@ final class SettingConfiguration implements DataConfigurationInterface
     /**
      * @var SettingValidator|null
      */
-    private ?SettingValidator $validator;
+    private $validator;
 
     /**
      * @param Configuration $configuration
