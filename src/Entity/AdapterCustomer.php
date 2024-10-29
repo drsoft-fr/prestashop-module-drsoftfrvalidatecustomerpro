@@ -63,7 +63,6 @@ class AdapterCustomer
     {
         return [
             'id' => $this->getId(),
-            'id_adapter_customer' => $this->getId(),
             'id_customer' => $this->getIdCustomer(),
             'active' => $this->isActive(),
             'date_add' => $this->getDateAdd(),
