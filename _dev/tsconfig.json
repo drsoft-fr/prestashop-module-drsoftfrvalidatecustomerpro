@@ -1,0 +1,53 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "module": "ESNext",
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "skipLibCheck": true,
+    "types": ["jquery"],
+    "typeRoots": [
+      "js/types",
+      "node_modules/@types",
+      "./node_modules/@types",
+      "./src/types",
+      "../../../admin-dev/themes/new-theme/js/types",
+      "../../../admin-dev/themes/new-theme/node_modules/@types"
+    ],
+
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "allowJs": true,
+    "noEmit": true,
+
+    /* Linting */
+    "strict": true,
+    "strictPropertyInitialization": false,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+
+    "baseUrl": "./",
+    "paths": {
+      "@app/*": ["../../../admin-dev/themes/new-theme/js/app/*"],
+      "@components/*": ["../../../admin-dev/themes/new-theme/js/components/*"],
+      "@js/*": ["../../../admin-dev/themes/new-theme/js/*"],
+      "@src/*": ["src/*"],
+      "@pages/*": ["../../../admin-dev/themes/new-theme/js/pages/*"],
+      "@node_modules/*": ["../../../admin-dev/themes/new-theme/node_modules/*"],
+      "@PSVue/*": ["../../../admin-dev/themes/new-theme/js/vue/*"],
+      "@PSTypes/*": ["../../../admin-dev/themes/new-theme/js/types/*"],
+      "@vue/*": ["../../../admin-dev/themes/new-theme/js/vue/*"]
+    }
+  },
+  "include": [
+    "./src/js",
+    "./src/types",
+    "../../../admin-dev/themes/new-theme/js/types"
+  ]
+}
