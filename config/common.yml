@@ -7,7 +7,7 @@ services:
     drsoft_fr.module.validate_customer_pro.data.provider.form_fields_provider:
         class: DrSoftFr\Module\ValidateCustomerPro\Data\Provider\FormFieldsProvider
         arguments:
-            - '@translator'
+            - "@=service('prestashop.adapter.legacy.context').getContext().getTranslator()"
 
     drsoft_fr.module.validate_customer_pro.data.form_fields_data_provider:
         class: DrSoftFr\Module\ValidateCustomerPro\Data\Provider\FormFieldsProvider
