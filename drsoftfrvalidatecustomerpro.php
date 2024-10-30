@@ -88,7 +88,7 @@ class drsoftfrvalidatecustomerpro extends Module
                 'visible' => false,
             ],
         ];
-        $this->version = '0.0.1';
+        $this->version = '1.0.0';
         $this->authorEmail = 'contact@drsoft.fr';
         $this->moduleGithubRepositoryUrl = 'https://github.com/drsoft-fr/prestashop-module-drsoftfrvalidatecustomerpro';
         $this->moduleGithubIssuesUrl = 'https://github.com/drsoft-fr/prestashop-module-drsoftfrvalidatecustomerpro/issues';
