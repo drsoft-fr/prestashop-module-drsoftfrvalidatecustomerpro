@@ -1,0 +1,21 @@
+services:
+    # Query services
+    drsoft_fr.module.validate_customer_pro.query.cms_page.get_id_cms_pages_query:
+        class: DrSoftFr\Module\ValidateCustomerPro\Query\CmsPage\GetIdCmsPagesQuery
+        arguments:
+            - '@=service("prestashop.adapter.legacy.context").getContext().shop.id'
+
+    # Query handler services
+    drsoft_fr.module.validate_customer_pro.adapter.query_handler.cms_page.get_id_cms_pages_query_handler:
+        class: DrSoftFr\Module\ValidateCustomerPro\Adapter\QueryHandler\CmsPage\GetIdCmsPagesQueryHandler
+        arguments:
+            - '@doctrine.dbal.default_connection'
+            - '%database_prefix%'
+
+    # Provider
+    drsoft_fr.module.validate_customer_pro.adapter.query_handler.cms_page.get_id_cms_pages_provider:
+        class: DrSoftFr\Module\ValidateCustomerPro\Adapter\QueryHandler\CmsPage\GetIdCmsPagesQueryHandler
+        factory: 'drsoft_fr.module.validate_customer_pro.adapter.query_handler.cms_page.get_id_cms_pages_query_handler:handle'
+        arguments:
+            - '@drsoft_fr.module.validate_customer_pro.query.cms_page.get_id_cms_pages_query'
+        public: true

@@ -1,0 +1,44 @@
+{% extends '@Modules/drsoftfrvalidatecustomerpro/views/templates/admin/base.html.twig' %}
+
+{% block main %}
+    <div class="row">
+        <div class="col-12 col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <a href="{{ path('admin_drsoft_fr_validate_customer_pro_adapter_customer_index') }}">
+                        <h2>{{ 'Customer'|trans }}</h2>
+                    </a>
+                </div>
+                <div class="card-body">
+                    <p>
+                        {{ 'Set additional properties to your customers.'|trans }}
+                    </p>
+                </div>
+                <div class="card-footer text-right">
+                    <a href="{{ path('admin_drsoft_fr_validate_customer_pro_adapter_customer_index') }}">
+                        {{ 'Setting up customers'|trans }} <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <a href="{{ path('admin_drsoft_fr_validate_customer_pro_setting_index') }}">
+                        <h2>{{ 'Setting'|trans }}</h2>
+                    </a>
+                </div>
+                <div class="card-body">
+                    <p>
+                        {{ 'Define the general parameters of the module.'|trans }}
+                    </p>
+                </div>
+                <div class="card-footer text-right">
+                    <a href="{{ path('admin_drsoft_fr_validate_customer_pro_setting_index') }}">
+                        {{ 'Module configuration'|trans }} <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

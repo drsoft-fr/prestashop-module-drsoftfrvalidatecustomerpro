@@ -1,0 +1,21 @@
+services:
+    # Query services
+    drsoft_fr.module.validate_customer_pro.query.group.get_id_groups_query:
+        class: DrSoftFr\Module\ValidateCustomerPro\Query\Group\GetIdGroupsQuery
+        arguments:
+            - '@=service("prestashop.adapter.legacy.context").getContext().shop.id'
+
+    # Query handler services
+    drsoft_fr.module.validate_customer_pro.adapter.query_handler.group.get_id_groups_query_handler:
+        class: DrSoftFr\Module\ValidateCustomerPro\Adapter\QueryHandler\Group\GetIdGroupsQueryHandler
+        arguments:
+            - '@doctrine.dbal.default_connection'
+            - '%database_prefix%'
+
+    # Provider
+    drsoft_fr.module.validate_customer_pro.adapter.query_handler.group.get_id_groups_provider:
+        class: DrSoftFr\Module\ValidateCustomerPro\Adapter\QueryHandler\Group\GetIdGroupsQueryHandler
+        factory: 'drsoft_fr.module.validate_customer_pro.adapter.query_handler.group.get_id_groups_query_handler:handle'
+        arguments:
+            - '@drsoft_fr.module.validate_customer_pro.query.group.get_id_groups_query'
+        public: true

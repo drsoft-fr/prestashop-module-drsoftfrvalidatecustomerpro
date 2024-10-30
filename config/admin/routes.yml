@@ -1,0 +1,10 @@
+_admin_drsoft_fr_validate_customer_pro_index_routing:
+    resource: "routes/index.yml"
+
+_admin_drsoft_fr_validate_customer_pro_adapter_customer_routing:
+    resource: "routes/adapter/customer.yml"
+    prefix: /customer
+
+_admin_drsoft_fr_validate_customer_pro_setting_routing:
+    resource: "routes/setting.yml"
+    prefix: /setting

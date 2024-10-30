@@ -1,0 +1,82 @@
+admin_drsoft_fr_validate_customer_pro_adapter_customer_index:
+    path: /
+    methods: [ GET ]
+    defaults:
+        _controller: DrSoftFr\Module\ValidateCustomerPro\Controller\Admin\AdapterCustomerController::indexAction
+        _legacy_controller: AdminDrSoftFrValidateCustomerProAdapterCustomer
+        _legacy_link: AdminDrSoftFrValidateCustomerProAdapterCustomer
+
+admin_drsoft_fr_validate_customer_pro_adapter_customer_bulk_enable:
+    path: /bulk-enable
+    methods: [ POST ]
+    defaults:
+        _controller: DrSoftFr\Module\ValidateCustomerPro\Controller\Admin\AdapterCustomerController::bulkEnableAction
+        _legacy_controller: AdminDrSoftFrValidateCustomerProAdapterCustomer
+
+admin_drsoft_fr_validate_customer_pro_adapter_customer_bulk_delete:
+    path: /bulk-delete
+    methods: [ POST ]
+    defaults:
+        _controller: DrSoftFr\Module\ValidateCustomerPro\Controller\Admin\AdapterCustomerController::bulkDeleteAction
+        _legacy_controller: AdminDrSoftFrValidateCustomerProAdapterCustomer
+
+admin_drsoft_fr_validate_customer_pro_adapter_customer_bulk_disable:
+    path: /bulk-disable
+    methods: [ POST ]
+    defaults:
+        _controller: DrSoftFr\Module\ValidateCustomerPro\Controller\Admin\AdapterCustomerController::bulkDisableAction
+        _legacy_controller: AdminDrSoftFrValidateCustomerProAdapterCustomer
+
+admin_drsoft_fr_validate_customer_pro_adapter_customer_create:
+    path: /new
+    methods: [ GET, POST ]
+    defaults:
+        _controller: DrSoftFr\Module\ValidateCustomerPro\Controller\Admin\AdapterCustomerController::createAction
+        _legacy_controller: AdminDrSoftFrValidateCustomerProAdapterCustomer
+
+admin_drsoft_fr_validate_customer_pro_adapter_customer_delete:
+    path: /{id}/delete
+    methods: [ DELETE ]
+    defaults:
+        _controller: DrSoftFr\Module\ValidateCustomerPro\Controller\Admin\AdapterCustomerController::deleteAction
+        _legacy_controller: AdminDrSoftFrValidateCustomerProAdapterCustomer
+        _legacy_parameters:
+            id: id
+    requirements:
+        id: \d+
+
+admin_drsoft_fr_validate_customer_pro_adapter_customer_edit:
+    path: /{id}/edit
+    methods: [ GET, POST ]
+    defaults:
+        _controller: DrSoftFr\Module\ValidateCustomerPro\Controller\Admin\AdapterCustomerController::editAction
+        _legacy_controller: AdminDrSoftFrValidateCustomerProAdapterCustomer
+        _legacy_parameters:
+            id: id
+    requirements:
+        id: \d+
+
+admin_drsoft_fr_validate_customer_pro_adapter_customer_export:
+    path: /export
+    methods: [ GET ]
+    defaults:
+        _controller: DrSoftFr\Module\ValidateCustomerPro\Controller\Admin\AdapterCustomerController::exportAction
+        _legacy_controller: AdminDrSoftFrValidateCustomerProAdapterCustomer
+
+admin_drsoft_fr_validate_customer_pro_adapter_customer_search:
+    path: /
+    methods: [ POST ]
+    defaults:
+        _controller: PrestaShopBundle:Admin\Common:searchGrid
+        _legacy_controller: AdminDrSoftFrValidateCustomerProAdapterCustomer
+        gridDefinitionFactoryServiceId: drsoft_fr.module.validate_customer_pro.grid.definition.factory.adapter_customers
+        redirectRoute: admin_drsoft_fr_validate_customer_pro_adapter_customer_index
+
+admin_drsoft_fr_validate_customer_pro_adapter_customer_toggle_active:
+    path: /{id}/toggle-active
+    methods: [ POST ]
+    defaults:
+        _controller: DrSoftFr\Module\ValidateCustomerPro\Controller\Admin\AdapterCustomerController::toggleActiveAction
+        _legacy_controller: AdminDrSoftFrValidateCustomerProAdapterCustomer
+        _legacy_parameters:
+            id: id

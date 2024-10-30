@@ -1,0 +1,1 @@
+DROP TABLE IF EXISTS `_DB_PREFIX_drsoft_fr_validate_customer_pro_adapter_customer`;

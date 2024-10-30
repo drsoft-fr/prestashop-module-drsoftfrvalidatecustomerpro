@@ -1,0 +1,4 @@
+imports:
+    - { resource: adapter/cms.yml }
+    - { resource: adapter/customer.yml }
+    - { resource: adapter/group.yml }

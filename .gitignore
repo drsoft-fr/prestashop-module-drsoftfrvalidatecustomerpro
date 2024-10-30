@@ -11,6 +11,12 @@ composer.lock
 /.idea/
 ###< phpstorm ###
 
+###> mail ###
+/mails/*
+!/mails/classic/
+!/mails/modern/
+###< mail ###
+
 ###> prestashop ###
 config*.xml
 ###< prestashop ###

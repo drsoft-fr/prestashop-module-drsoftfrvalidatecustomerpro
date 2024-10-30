@@ -1,0 +1,4 @@
+# Admin Back Office routing
+_admin_drsoft_fr_validate_customer_pro_routing:
+    resource: "admin/routes.yml"
+    prefix: /drsoft-fr/validate-customer-pro

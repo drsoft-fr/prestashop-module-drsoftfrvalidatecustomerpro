@@ -1,0 +1,4 @@
+imports:
+    - { resource: ./common.yml }
+    - { resource: services/adapter.yml }
+    - { resource: services/setting.yml }

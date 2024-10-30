@@ -1,0 +1,30 @@
+{% extends '@PrestaShop/Admin/layout.html.twig' %}
+
+{% trans_default_domain "Modules.Drsoftfrvalidatecustomerpro.Admin" %}
+
+{% block content_header %}
+    {{ parent() }}
+
+    {% include '@Modules/drsoftfrvalidatecustomerpro/views/templates/admin/common/layout/_nav.html.twig' %}
+{% endblock %}
+
+{% block content %}
+    {{ block('main') }}
+{% endblock %}
+
+{% block content_footer %}
+    {% include '@Modules/drsoftfrvalidatecustomerpro/views/templates/admin/common/layout/_footer.html.twig' %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {% if manifest is defined %}
+        <script>
+          window.props = window.props || {}
+        </script>
+
+        <script src="{{ module.getPathUri() }}views/{{ manifest.url('src/js/admin/bootstrap.ts')['file'] }}"
+                type="module"></script>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,198 @@
+{% import '@PrestaShop/Admin/macros.html.twig' as ps %}
+
+{% block drsoft_fr_validate_customer_pro_setting_form %}
+    {{ form_start(drsoft_fr_validate_customer_pro_setting_form) }}
+    <div class="card">
+        <h3 class="card-header">
+            <i class="material-icons">settings</i> {{ 'drSoft.fr Validate customer pro'|trans }}
+        </h3>
+        <div class="form-wrapper">
+            {{ form_errors(drsoft_fr_validate_customer_pro_setting_form) }}
+            <div class="align-lg-items-start d-lg-flex">
+                <div aria-orientation="vertical"
+                     class="border-0 flex-column flex-shrink-0 nav nav-pills"
+                     id="v-pills-settings-tab"
+                     role="tablist">
+                    <button aria-controls="v-pills-settings-1"
+                            aria-selected="true"
+                            class="active btn nav-link"
+                            data-target="#v-pills-settings-1"
+                            data-toggle="pill"
+                            id="v-pills-setting-1-tab"
+                            role="tab"
+                            type="button">
+                        {{ 'Main'|trans }}
+                    </button>
+                    <button aria-controls="v-pills-settings-2"
+                            aria-selected="false"
+                            class="btn nav-link"
+                            data-target="#v-pills-settings-2"
+                            data-toggle="pill"
+                            id="v-pills-setting-2-tab"
+                            role="tab"
+                            type="button">
+                        {{ 'Email'|trans }}
+                    </button>
+                    <button aria-controls="v-pills-settings-3"
+                            aria-selected="false"
+                            class="btn nav-link"
+                            data-target="#v-pills-settings-3"
+                            data-toggle="pill"
+                            id="v-pills-setting-3-tab"
+                            role="tab"
+                            type="button">
+                        {{ 'CMS'|trans }}
+                    </button>
+                    <button aria-controls="v-pills-settings-4"
+                            aria-selected="false"
+                            class="btn nav-link"
+                            data-target="#v-pills-settings-4"
+                            data-toggle="pill"
+                            id="v-pills-setting-4-tab"
+                            role="tab"
+                            type="button">
+                        {{ 'Customer group'|trans }}
+                    </button>
+                    <button aria-controls="v-pills-settings-5"
+                            aria-selected="false"
+                            class="d-none"
+                            data-target="#v-pills-settings-5"
+                            data-toggle="pill"
+                            id="v-pills-setting-5-tab"
+                            role="tab"
+                            type="button">
+                        {{ 'Form'|trans }}
+                    </button>
+                    <button aria-controls="v-pills-settings-6"
+                            aria-selected="false"
+                            class="btn nav-link"
+                            data-target="#v-pills-settings-6"
+                            data-toggle="pill"
+                            id="v-pills-setting-6-tab"
+                            role="tab"
+                            type="button">
+                        {{ 'Alert'|trans }}
+                    </button>
+                </div>
+                {% block drsoft_fr_validate_customer_pro_setting_form_rest %}
+                    <div class="flex-grow-1 tab-content" id="v-pills-settings-tab-content">
+                        <div aria-labelledby="v-pills-setting-1-tab"
+                             class="tab-pane fade show active"
+                             id="v-pills-settings-1"
+                             role="tabpanel"
+                             tabindex="0">
+                            <div class="card m-auto">
+                                <fieldset>
+                                    <legend>
+                                        <h2 class="card-header">{{ 'Main'|trans }}</h2>
+                                    </legend>
+                                    <div class="card-body">
+                                        {{ form_row(drsoft_fr_validate_customer_pro_setting_form.active) }}
+                                        {{ form_row(drsoft_fr_validate_customer_pro_setting_form.enable_manual_validation_account) }}
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                        <div aria-labelledby="v-pills-setting-2-tab"
+                             class="tab-pane fade"
+                             id="v-pills-settings-2"
+                             role="tabpanel"
+                             tabindex="0">
+                            <div class="card m-auto">
+                                <fieldset>
+                                    <legend>
+                                        <h2 class="card-header">{{ 'Email'|trans }}</h2>
+                                    </legend>
+                                    <div class="card-body">
+                                        {{ form_row(drsoft_fr_validate_customer_pro_setting_form.admin_action_customer_account_add_email) }}
+                                        {{ form_row(drsoft_fr_validate_customer_pro_setting_form.admin_send_email_on_action_customer_account_add_hook) }}
+                                        {{ form_row(drsoft_fr_validate_customer_pro_setting_form.enable_email_approval) }}
+                                        {{ form_row(drsoft_fr_validate_customer_pro_setting_form.enable_email_pending_approval) }}
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                        <div aria-labelledby="v-pills-setting-3-tab"
+                             class="tab-pane fade"
+                             id="v-pills-settings-3"
+                             role="tabpanel"
+                             tabindex="0">
+                            <div class="card m-auto">
+                                <fieldset>
+                                    <legend>
+                                        <h2 class="card-header">{{ 'CMS'|trans }}</h2>
+                                    </legend>
+                                    <div class="card-body">
+                                        {{ form_row(drsoft_fr_validate_customer_pro_setting_form.cms_notify_id) }}
+                                        {{ form_row(drsoft_fr_validate_customer_pro_setting_form.cms_not_activated_id) }}
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                        <div aria-labelledby="v-pills-setting-4-tab"
+                             class="tab-pane fade"
+                             id="v-pills-settings-4"
+                             role="tabpanel"
+                             tabindex="0">
+                            <div class="card m-auto">
+                                <fieldset>
+                                    <legend>
+                                        <h2 class="card-header">{{ 'Customer group'|trans }}</h2>
+                                    </legend>
+                                    <div class="card-body">
+                                        {{ form_row(drsoft_fr_validate_customer_pro_setting_form.customer_group_id) }}
+                                        {{ form_row(drsoft_fr_validate_customer_pro_setting_form.enable_auto_customer_group_selection) }}
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                        <div aria-labelledby="v-pills-setting-5-tab"
+                             class="d-none"
+                             id="v-pills-settings-5"
+                             role="tabpanel"
+                             tabindex="0">
+                            <div class="card m-auto">
+                                <fieldset>
+                                    <legend>
+                                        <h2 class="card-header">{{ 'Form'|trans }}</h2>
+                                    </legend>
+                                    <div class="card-body">
+                                        {{ form_row(drsoft_fr_validate_customer_pro_setting_form.required_form_fields) }}
+                                        {{ form_row(drsoft_fr_validate_customer_pro_setting_form.additional_form_fields) }}
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                        <div aria-labelledby="v-pills-setting-6-tab"
+                             class="tab-pane fade"
+                             id="v-pills-settings-6"
+                             role="tabpanel"
+                             tabindex="0">
+                            <div class="card m-auto">
+                                <fieldset>
+                                    <legend>
+                                        <h2 class="card-header">{{ 'Alert'|trans }}</h2>
+                                    </legend>
+                                    <div class="card-body">
+                                        {{ form_row(drsoft_fr_validate_customer_pro_setting_form.enable_unauthenticated_customer_alert) }}
+                                        {{ form_row(drsoft_fr_validate_customer_pro_setting_form.enable_unapproved_customer_alert) }}
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                    </div>
+                {% endblock %}
+            </div>
+        </div>
+        <div class="card-footer">
+            <a href="{{ path('admin_drsoft_fr_validate_customer_pro_setting_reset') }}"
+               class="btn btn-outline-secondary">
+                {{ 'Reset default settings'|trans }}
+            </a>
+            <button class="btn btn-primary float-right">
+                {{ 'Save'|trans({}, 'Admin.Actions') }}
+            </button>
+        </div>
+    </div>
+    {{ form_end(drsoft_fr_validate_customer_pro_setting_form) }}
+{% endblock %}

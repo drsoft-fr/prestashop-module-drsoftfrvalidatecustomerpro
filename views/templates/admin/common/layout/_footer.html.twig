@@ -1,0 +1,29 @@
+<div class="card">
+    <div class="row justify-content-center">
+        <div class="col">
+            <div class="card-body">
+                <p class="my-0 text-center">
+                    {{ 'Module:'|trans }} {{ module.name }} - v{{ module.version }}
+                    - {{ 'Author:'|trans }} {{ module.author }} -
+                    <a
+                            href="mailto:{{ module.authorEmail }}">{{ module.authorEmail }}</a> -
+                    <a
+                            href="{{ module.moduleGithubRepositoryUrl }}">{{ 'GitHub repository'|trans }}</a> -
+                    <a
+                            href="{{ module.moduleGithubIssuesUrl }}">{{ 'Issues URL'|trans }}</a>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col text-center">
+            <div class="card-body text-center">
+                <img alt="drSoft.fr"
+                     height="49"
+                     loading="lazy"
+                     src="{{ asset('../modules/drsoftfrvalidatecustomerpro/views/img/logo-dark-master.png') }}"
+                     width="128">
+            </div>
+        </div>
+    </div>
+</div>

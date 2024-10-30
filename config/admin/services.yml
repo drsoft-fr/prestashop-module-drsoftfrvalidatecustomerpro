@@ -1,0 +1,15 @@
+imports:
+    - { resource: ../common.yml }
+
+services:
+    drsoft_fr.module.validate_customer_pro.module:
+        class: drsoftfrvalidatecustomerpro
+        public: true
+
+    drsoft_fr.module.validate_customer_pro.install.factory.installer_factory:
+        class: DrSoftFr\Module\ValidateCustomerPro\Install\Factory\InstallerFactory
+
+    drsoft_fr.module.validate_customer_pro.install.installer:
+        class: DrSoftFr\Module\ValidateCustomerPro\Install\Installer
+        factory: 'drsoft_fr.module.validate_customer_pro.install.factory.installer_factory:create'
+        public: true
