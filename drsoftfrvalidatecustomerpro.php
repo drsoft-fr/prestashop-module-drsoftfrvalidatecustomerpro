@@ -25,6 +25,8 @@ if (file_exists($autoloadPath)) {
     require_once $autoloadPath;
 }
 
+// TODO continuer l'ajout de fonctionnalité afin de renseigner l'adresse lors de la creation du compte
+
 /**
  * Class drsoftfrvalidatecustomerpro
  */
